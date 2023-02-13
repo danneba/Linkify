@@ -10,6 +10,7 @@ module.exports = {
         "trending-pic": "url('./assets/trending.png')",
         "trend-pic": "url('./assets/trend.png')",
         "tren-pic": "url('./assets/tren.png')",
+        "location-pic": "url('./assets/map.png')",
       },
 
       colors: {
