@@ -3,7 +3,7 @@ import Signup from "./pages/signup";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/home/index";
-import Detail from "./pages/home/index";
+import Detail from "./pages/home/Detail";
 import MainLayout from "./layout/index";
 import PageNotFound from "./pages/404";
 
@@ -17,8 +17,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           {/* <Route path="home" element={<MainLayout theme="dark" />}> */}
-          <Route path="home" element={<Home />} />
-          <Route path="venues" element={<MainLayout theme="dark" />}>
+          <Route path="/" element={<MainLayout />}>
+            <Route path="home" element={<Home />} />
             <Route index element={<Detail />} />
             <Route path=":venueId" element={<Detail />} />
           </Route>

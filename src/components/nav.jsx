@@ -6,19 +6,10 @@ import { NavLink, Link } from "react-router-dom";
 
 function Nav({ theme }) {
   return (
-    <>
-      <div
-        className={
-          theme === "white"
-            ? "flex justify-between px-10 z-30 relative w-full text-white"
-            : "flex justify-between px-10 z-30 relative w-full text-dark"
-        }
-      >
-        {theme === "white" ? (
-          <img src={whiteIcon} alt="link" className=" h-16 px-6 my-10" />
-        ) : (
-          <img src={darkIcon} alt="link" className=" h-16 px-6 my-10" />
-        )}
+    <div className="bg-primary w-full border-b-2 border-danger">
+      <div className="flex justify-between px-10 z-30  w-full text-white">
+        <img src={whiteIcon} alt="link" className=" h-12 px-6 my-5" />
+
         <div className="flex justify-between items-center gap-x-12 mr-4 ">
           <ul className="flex gap-8 mt-2 pr-4 ">
             <NavLink to={"/home"}>Home</NavLink>
@@ -28,7 +19,7 @@ function Nav({ theme }) {
           <div className="flex rounded-full w-12 h-12 bg-avatar-pic  "></div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

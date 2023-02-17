@@ -1,7 +1,10 @@
 import { useState } from "react";
-import avatar from "../assets/avatar.jpg";
-import event from "../assets/event.png";
-import events from "../assets/events.png";
+import avatar from "../../assets/avatar.jpg";
+import event from "../../assets/event.png";
+import events from "../../assets/events.png";
+import plus from "../../assets/Plus.svg";
+
+import { UilPlusCircle } from "@iconscout/react-unicons";
 
 function Detail() {
   return (
@@ -69,7 +72,7 @@ function Detail() {
             <div className="flex w-full bg-location-pic h-96"></div>
           </div>
         </div>
-        <div className="flex flex-col w-full mx-24 mt-12 gap-8">
+        <div className="flex flex-col w-full mx-24 mt-12 gap-8 bg-gray-100 p-10 rounded pb-20">
           <p className="text-3xl flex ">Comments</p>
           <div className="flex gap-4">
             <img
@@ -118,10 +121,11 @@ function Detail() {
         </div>
       </div>
       <div className="flex flex-col gap-4 mt-48">
-        <button className="flex w-52 h-16 ml-8 justify-center items-center text-white bg-[#EF5DA8]">
+        <button className="flex w-52 h-16 ml-8 justify-center items-center text-white bg-[#EF5DA8] rounded hover:bg-opacity-90">
           Get Tickets
         </button>
-        <button className="flex w-52 h-16 ml-8 justify-center items-center  border-2 border-[#EF5DA8]">
+        <button className="flex w-52 h-16 ml-8 justify-center items-center gap-x-2 border-2 border-[#EF5DA8] rounded ">
+          <img src={plus} className="h-6" />
           Add to Wish list
         </button>
         <div className="flex flex-col items-center justify-center w-96 h-[55%] border-2 gap-8 border-[#EF5DA8] rounded-3xl">
@@ -136,7 +140,7 @@ function Detail() {
             <p>Loreum ipsum</p>
             <p>loreum kalas loreum </p>
           </div>
-          <button className="flex mt-24  w-52 h-16 ml-8 justify-center items-center text-white bg-[#EF5DA8]">
+          <button className="flex mt-24  w-52 h-16 ml-8 justify-center items-center text-white bg-danger rounded hover:bg-opacity-90">
             View more..
           </button>
         </div>

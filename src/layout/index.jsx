@@ -4,12 +4,14 @@ import whiteIcon from "../assets/icon-white.png";
 import darkIcon from "../assets/icon-dark.svg";
 import { NavLink, Link } from "react-router-dom";
 import Nav from "../components/nav";
+import Footer from "../components/footer";
 
-function main_layout({ theme }) {
+function main_layout({}) {
   return (
     <>
-      <nav theme={theme} />
+      <Nav />
       <Outlet />
+      <Footer />
     </>
   );
 }
