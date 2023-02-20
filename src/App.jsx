@@ -5,19 +5,17 @@ import reactMain from "./assets/main.svg";
 import Detail from "./components/Detail.jsx";
 import searchMain from "./assets/search.png";
 
+import Ticket from "./components/basic/Ticket.jsx";
+import Event from "./components/basic/Create_event.jsx";
+
 import icon from "./assets/ICON.png";
 
 import "./App.css";
 
 function App() {
   return (
-    <div className="w-full ">
-      <div>
-        <p className="text-red-500 text-3xl">This is text</p>
-        <div className="w-full bg-black ">
-          <img src={reactLogo} className="w-full object-cover" />
-        </div>
-      </div>
+    <div className="w-full h-full ">
+      <Event />
     </div>
   );
 }
