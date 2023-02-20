@@ -350,7 +350,7 @@ function home() {
       </div>
       <div className="bg-gray-300 shadow-xl pb-32  rounded-lg w-[70%] py-20 flex flex-col mt-20 items-center gap-y-10 relative">
         <p className="text-4xl font-Lobster max-w-[35ch]">
-          Looking for your next to post your{" "}
+          Looking for posting your next{" "}
           <span className="text-4xl text-danger">
             venues,events or concert .
           </span>
@@ -365,7 +365,7 @@ function home() {
             Contact us
           </div>
         </div>
-        <div className="bg-[url('./assets/social/social.svg')] bg-cover w-96 h-96 absolute  place-self-end top-0 right-0 z-0"></div>
+        <div className="bg-[url('./assets/social/social.svg')] bg-cover w-96 h-96 absolute  place-self-end top-0 right-0 z-0 -mr-10 mt-10"></div>
       </div>
     </div>
   );
