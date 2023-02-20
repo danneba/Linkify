@@ -8,7 +8,7 @@ function Nav({ theme }) {
   return (
     <div className="bg-primary w-full border-b-[1px] border-danger">
       <div className="flex justify-between px-10 z-30  w-full text-white">
-        <img src={whiteIcon} alt="link" className=" h-12 px-6 my-5" />
+        <img src={whiteIcon} alt="link" className=" h-12 px-6 my-5" onClick={} />
 
         <div className="flex justify-between items-center gap-x-12 mr-4 ">
           <ul className="flex gap-8 mt-2 pr-4 ">
