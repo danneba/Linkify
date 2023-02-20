@@ -5,13 +5,19 @@ import events from "../../assets/events.png";
 import plus from "../../assets/Plus.svg";
 
 import { UilPlusCircle } from "@iconscout/react-unicons";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Detail() {
+  const navigate = useNavigate();
+  function goToCheckout() {
+    navigate("/venue/get-ticket");
+  }
+
   return (
-    <div className=" h-full flex w-[80%] mx-auto m-5  ">
+    <div className=" h-full flex w-[70%] mx-auto m-5  ">
       <div className="flex flex-col w-full gap-4">
         <div className="flex w-full gap-4 p-4  items-center">
-          <div className="flex rounded-full border-[#EF5DA8] border-2 w-12 h-12 bg-avatar-pic"></div>
+          <div className="flex rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"></div>
           <div className="flex flex-col ">
             <p className="text-sm font-normal">John Doe</p>
             <p className="text-xs font-extralight">Sep 5, 2022</p>
@@ -23,9 +29,9 @@ function Detail() {
           <p className="text-5xl font-bold">Loreum Ipsum</p>
           <p className="text-2xl font-normal">loreum ipsum dlore </p>
         </div>
-        <div className="flex w-[70%] h-80 bg-nature-light"></div>
-        <div className="flex flex-col w-[70%] gap-12">
-          <p>
+        <div className="flex w-[85%] h-80 bg-nature-light"></div>
+        <div className="flex flex-col w-full gap-12">
+          <p className="w-[85%]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
             mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
             fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
@@ -69,66 +75,81 @@ function Detail() {
           </ul>
           <div className="flex w-full flex-col gap-4">
             <p className="text-4xl ">Location</p>
-            <div className="flex w-full bg-location-pic h-96"></div>
+            <div className=" flex w-full bg-location-pic h-96 shadow-2xl"></div>
           </div>
         </div>
-        <div className="flex flex-col w-full mx-24 mt-12 gap-8 bg-gray-100 p-10 rounded pb-20">
-          <p className="text-3xl flex ">Comments</p>
-          <div className="flex gap-4">
-            <img
-              src={avatar}
-              className="rounded-full border-[#EF5DA8] border-2 w-12 h-12 bg-avatar-pic"
-              alt=""
-            />
-            <div className="flex flex-col justify-between">
-              <span>
-                <p>John Doe</p>
-                <p>Can't Wait</p>
-              </span>
+        <div className="flex flex-col w-full mt-12 gap-8 bg-gray-200 rounded-md pt-20 px-20 shadow-xl pb-40">
+          <p className="text-3xl flex font-Lobster ml-5">Comments</p>
+          <div className="flex gap-4 clear-left justify-between">
+            <div className="flex gap-x-5">
+              <img
+                src={avatar}
+                className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
+                alt=""
+              />
+              <div className="flex flex-col justify-between">
+                <span>
+                  <p>John Doe</p>
+                  <p>Can't Wait</p>
+                </span>
+              </div>
             </div>
-            <span className="flex ml-80 text-sm font-light">2 hours ago</span>
+            <span className="flex ml-80 text-sm font-light min-w-max">
+              2 hours ago
+            </span>
           </div>
-          <div className="flex gap-4">
-            <img
-              src={avatar}
-              className="rounded-full border-[#EF5DA8] border-2 w-12 h-12 bg-avatar-pic"
-              alt=""
-            />
-            <div className="flex flex-col justify-between">
-              <span>
-                <p>Kendric</p>
-                <p>@johnDoe Ya what an amazing event it will be</p>
-              </span>
+          <div className="flex gap-4 clear-left justify-between">
+            <div className="flex gap-x-5">
+              <img
+                src={avatar}
+                className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
+                alt=""
+              />
+              <div className="flex flex-col justify-between">
+                <span>
+                  <p>Kendric</p>
+                  <p>
+                    <span className="text-danger">@johnDoe </span> Ya what an
+                    amazing event it will be
+                  </p>
+                </span>
+              </div>
             </div>
-            <span className="flex ml-16 text-sm font-light">2 hours ago</span>
+            <span className="flex ml-80 text-sm font-light min-w-max">
+              2 hours ago
+            </span>
           </div>
+
           <div className="flex gap-4 items-center ml-8">
             <img
               src={avatar}
-              className="rounded-full border-[#EF5DA8] border-2 w-12 h-12 bg-avatar-pic"
+              className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
               alt=""
             />
-            <div className="flex flex-col  justify-between">
+            <div className="flex flex-col  justify-between w-full">
               <span>
                 <input
                   type="text"
                   placeholder="comment here ..."
-                  className="h-9 border-2 p-4 border-[#EF5DA8] rounded-lg flex w-72"
+                  className="h-9 border-[1px] p-4 border-danger rounded flex w-[70%] outline-1 outline-danger"
                 />
               </span>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-4 mt-48">
-        <button className="flex w-52 h-16 ml-8 justify-center items-center text-white bg-[#EF5DA8] rounded hover:bg-opacity-90">
+      <div className="flex flex-col gap-4 mt-28 ">
+        <button
+          onClick={goToCheckout}
+          className="flex w-52 h-16  justify-center items-center text-white bg-[#EF5DA8] rounded hover:bg-opacity-90"
+        >
           Get Tickets
         </button>
-        <button className="flex w-52 h-16 ml-8 justify-center items-center gap-x-2 border-2 border-[#EF5DA8] rounded ">
+        <button className="flex w-52 h-16  justify-center items-center gap-x-2 border-2 border-danger rounded ">
           <img src={plus} className="h-6" />
           Add to Wish list
         </button>
-        <div className="flex flex-col items-center justify-center w-96 h-[55%] border-2 gap-8 border-[#EF5DA8] rounded-3xl">
+        <div className="flex flex-col items-center justify-center w-96 py-14 border-2 gap-5 border-danger rounded-lg shadow-xl">
           <span className="text-3xl font-medium">Similar Events</span>
           <div className="flex flex-col w-80 h-52">
             <img src={event} alt="the event is " />

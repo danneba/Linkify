@@ -6,6 +6,7 @@ import Home from "./pages/home/index";
 import Detail from "./pages/home/Detail";
 import MainLayout from "./layout/index";
 import CreateEvent from "./components/basic/Create_event";
+import Ticket from "./components/basic/Ticket";
 
 import PageNotFound from "./pages/404";
 
@@ -24,6 +25,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path=":venueId" element={<Detail />} />
             <Route path="/register" element={<CreateEvent />} />
+            <Route path="/venue/get-ticket" element={<Ticket />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
 
