@@ -4,7 +4,23 @@ import dance from "../assets/login-image.png";
 import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 
+import { useQuery, gql } from "@apollo/client";
+function query() {
+  const GET_LOCATIONS = gql`
+    query GetLocations {
+      login(email: "test@email.com", password: "12345678") {
+        email
+        address
+        first_name
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  console.log(data);
+}
+
 function signup() {
+  query();
   return (
     <div className="h-screen flex justify-center w-full">
       <div className="w-full flex flex-col gap-y-32 mt-20 ">

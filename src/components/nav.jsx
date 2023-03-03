@@ -6,7 +6,7 @@ import { NavLink, Link } from "react-router-dom";
 
 function Nav({ theme }) {
   return (
-    <div className="bg-primary w-full border-b-[1px] border-danger">
+    <div className="bg-primary w-full">
       <div className="flex justify-between px-10 z-30  w-full text-white">
         <img src={whiteIcon} alt="link" className=" h-12 px-6 my-5" />
 
