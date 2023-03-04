@@ -64,7 +64,7 @@ function Ticket() {
                 first_name: e.target.value,
               });
             }}
-            className="h-12 w-[447px] px-4 py-4 caret-[#EF5DA8] rounded-[6px] border-[1px] border-danger focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-danger"
+            className="h-12 w-[447px] px-4 py-4 caret-[#EF5DA8] rounded-[6px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           />
           <label className="text-base font-normal text-[#2D2A56]">
             Last name:
@@ -77,7 +77,7 @@ function Ticket() {
                 last_name: e.target.value,
               });
             }}
-            className="h-12 w-[447px] px-4 py-4 caret-[#EF5DA8] rounded-[6px] border-[1px] border-danger focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-danger"
+            className="h-12 w-[447px] px-4 py-4 caret-[#EF5DA8] rounded-[6px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           />
           <label className=" text-base font-normal text-[#2D2A56]">
             Ticket type:
@@ -89,14 +89,14 @@ function Ticket() {
                 price: e.target.value,
               });
             }}
-            className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-danger focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-danger"
+            className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           >
             <option>40</option>
             <option>30</option>
             <option>20</option>
             <option>10</option>
           </select>
-          <select className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-danger focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-danger">
+          <select className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed">
             <option>VVIP - 40$</option>
             <option>VIP - 30$</option>
             <option>Orchestra Seats - 20$</option>
@@ -107,7 +107,7 @@ function Ticket() {
           </label>
           <input
             type="number"
-            className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-danger focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-danger"
+            className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           />
           <div className="flex justify-end ">
             <button className="h-11 w-44 rounded-[50px] text-white text-base  bg-[#EF5DA8]">

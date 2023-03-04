@@ -43,7 +43,7 @@ function index() {
               </p>
               <p>Forget Password?</p>
             </div>
-            <button className="text-center rounded bg-danger text-white hover:bg-opacity-90 py-3">
+            <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3">
               Login
             </button>
             <div className="flex justify-center items-center gap-x-5  font-light text-gray-500">
