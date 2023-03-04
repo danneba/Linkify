@@ -17,10 +17,8 @@ module.exports = {
       },
       colors: {
         primary: "#001235",
-        "primary-bg": "#ff8700",
-        danger: "#EA4C89",
+        mainRed: "#EA4C89",
         lightBG: "#D6E4E5",
-        mainTed: "#C31C58",
         "darkBG-2": "#01407A",
         "orange-2": "#EA5933",
         "green-2": "#297980",

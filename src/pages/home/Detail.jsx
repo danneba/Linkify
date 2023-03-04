@@ -17,7 +17,7 @@ function Detail() {
     <div className=" h-full flex w-[70%] mx-auto m-5  ">
       <div className="flex flex-col w-full gap-4">
         <div className="flex w-full gap-4 p-4  items-center">
-          <div className="flex rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"></div>
+          <div className="flex rounded-full border-mainRed border-2 w-12 h-12 bg-avatar-pic"></div>
           <div className="flex flex-col ">
             <p className="text-sm font-normal">John Doe</p>
             <p className="text-xs font-extralight">Sep 5, 2022</p>
@@ -84,7 +84,7 @@ function Detail() {
             <div className="flex gap-x-5">
               <img
                 src={avatar}
-                className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
+                className="rounded-full border-mainRed border-2 w-12 h-12 bg-avatar-pic"
                 alt=""
               />
               <div className="flex flex-col justify-between">
@@ -102,14 +102,14 @@ function Detail() {
             <div className="flex gap-x-5">
               <img
                 src={avatar}
-                className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
+                className="rounded-full border-mainRed border-2 w-12 h-12 bg-avatar-pic"
                 alt=""
               />
               <div className="flex flex-col justify-between">
                 <span>
                   <p>Kendric</p>
                   <p>
-                    <span className="text-danger">@johnDoe </span> Ya what an
+                    <span className="text-mainRed">@johnDoe </span> Ya what an
                     amazing event it will be
                   </p>
                 </span>
@@ -123,7 +123,7 @@ function Detail() {
           <div className="flex gap-4 items-center ml-8">
             <img
               src={avatar}
-              className="rounded-full border-danger border-2 w-12 h-12 bg-avatar-pic"
+              className="rounded-full border-mainRed border-2 w-12 h-12 bg-avatar-pic"
               alt=""
             />
             <div className="flex flex-col  justify-between w-full">
@@ -131,7 +131,7 @@ function Detail() {
                 <input
                   type="text"
                   placeholder="comment here ..."
-                  className="h-9 border-[1px] p-4 border-danger rounded flex w-[70%] outline-1 outline-danger"
+                  className="h-9 border-[1px] p-4 border-mainRed rounded flex w-[70%] outline-1 outline-mainRed"
                 />
               </span>
             </div>
@@ -145,11 +145,11 @@ function Detail() {
         >
           Get Tickets
         </button>
-        <button className="flex w-52 h-16  justify-center items-center gap-x-2 border-2 border-danger rounded ">
+        <button className="flex w-52 h-16  justify-center items-center gap-x-2 border-2 border-mainRed rounded ">
           <img src={plus} className="h-6" />
           Add to Wish list
         </button>
-        <div className="flex flex-col items-center justify-center w-96 py-14 border-2 gap-5 border-danger rounded-lg shadow-xl">
+        <div className="flex flex-col items-center justify-center w-96 py-14 border-2 gap-5 border-mainRed rounded-lg shadow-xl">
           <span className="text-3xl font-medium">Similar Events</span>
           <div className="flex flex-col w-80 h-52">
             <img src={event} alt="the event is " />
@@ -161,7 +161,7 @@ function Detail() {
             <p>Loreum ipsum</p>
             <p>loreum kalas loreum </p>
           </div>
-          <button className="flex mt-24  w-52 h-16 ml-8 justify-center items-center text-white bg-danger rounded hover:bg-opacity-90">
+          <button className="flex mt-24  w-52 h-16 ml-8 justify-center items-center text-white bg-mainRed rounded hover:bg-opacity-90">
             View more..
           </button>
         </div>

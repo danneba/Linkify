@@ -48,30 +48,30 @@ function home() {
           <div className="flex  rounded-3xl items-center justify-center h-12 px-10 min-w-min bg-gray-300">
             All
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
-          <div className="flex rounded-3xl bg-danger cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
         </div>
         <div className="text-left mt-10">
-          <p className=" text-2xl font-bold font-Lobster text-danger">
+          <p className=" text-2xl font-bold font-Lobster text-mainRed">
             Trending
           </p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
@@ -87,7 +87,7 @@ function home() {
       </div>
       <div className="flex flex-col px-5 w-[75%] h-full mt-5">
         <div className="text-left mb-5">
-          <p className=" text-2xl font-bold font-Lobster text-danger">
+          <p className=" text-2xl font-bold font-Lobster text-mainRed">
             Upcoming
           </p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
@@ -105,7 +105,7 @@ function home() {
       </div>
       <div className="flex flex-col px-5 w-[75%] h-full mt-10">
         <div className="text-left mb-5">
-          <p className=" text-2xl font-bold font-Lobster text-danger">New</p>
+          <p className=" text-2xl font-bold font-Lobster text-mainRed">New</p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
         </div>
         <div className="grid grid-cols-4 w-full gap-5 overflow-x-auto">
@@ -119,7 +119,7 @@ function home() {
       </div>
       <div className="flex flex-col px-5 w-[75%] mt-10">
         <div className="text-left mb-5">
-          <p className=" text-2xl font-bold font-Lobster text-danger">
+          <p className=" text-2xl font-bold font-Lobster text-mainRed">
             Discover
           </p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
@@ -139,7 +139,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -157,7 +157,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -175,7 +175,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -193,7 +193,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -211,7 +211,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -229,7 +229,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -247,7 +247,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -265,7 +265,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -283,7 +283,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -301,7 +301,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -319,7 +319,7 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2 ">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
@@ -337,21 +337,21 @@ function home() {
                 <p className="font-bold">Free</p>
               </div>
               <div className="flex gap-2">
-                <UilStar className="text-danger cursor-pointer" />
+                <UilStar className="text-mainRed cursor-pointer" />
                 4.5
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="rounded bg-danger text-white  px-10 py-3 mt-14 group flex gap-x-2 cursor-pointer hover:bg-opacity-90">
+      <div className="rounded bg-mainRed text-white  px-10 py-3 mt-14 group flex gap-x-2 cursor-pointer hover:bg-opacity-90">
         See more
         <UilArrowDown className="group-hover:animate-bounce" />
       </div>
       <div className="bg-gray-300 shadow-xl pb-32  rounded-lg w-[70%] py-20 flex flex-col mt-20 items-center gap-y-10 relative">
         <p className="text-4xl font-Lobster max-w-[35ch]">
           Looking for posting your next{" "}
-          <span className="text-4xl text-danger">
+          <span className="text-4xl text-mainRed">
             venues,events or concert .
           </span>
         </p>
@@ -361,7 +361,7 @@ function home() {
             className="rounded-l-lg outline-none h-16 w-full px-10"
             placeholder="Talk to us"
           />
-          <div className="rounded-r-lg w-[35%]   bg-danger text-white  py-3 group flex gap-x-2 cursor-pointer hover:bg-opacity-90 justify-center items-center">
+          <div className="rounded-r-lg w-[35%]   bg-mainRed text-white  py-3 group flex gap-x-2 cursor-pointer hover:bg-opacity-90 justify-center items-center">
             Contact us
           </div>
         </div>

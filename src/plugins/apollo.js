@@ -16,8 +16,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-root.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-);
+// const client = ...
+client
+  .query({
+    query: gql`
+      query GetLocations {
+        locations {
+          id
+          name
+          description
+          photo
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
