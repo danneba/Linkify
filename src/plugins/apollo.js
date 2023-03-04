@@ -2,9 +2,9 @@ import React from "react";
 import * as ReactDOM from "react-dom/client";
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloProvider,
-  gql,
+  InMemoryCache,
+  HttpLink,
 } from "@apollo/client";
 import App from "./App";
 

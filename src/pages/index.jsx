@@ -16,7 +16,7 @@ function index() {
             <div className="flex flex-col mb-5">
               <div className="flex">
                 <h1 className="text-4xl font-bold">Welcome Back.</h1>
-                <img src={hi} />
+                <img src={hi} alt="" />
               </div>
               <p className="font-normal text-sm">
                 All in one place to find events all around!!
@@ -52,7 +52,7 @@ function index() {
               <p className="w-32 h-[1px] bg-gray-300"></p>
             </div>
             <button className="text-center rounded border-[1px] border-gray-500  hover:bg-opacity-90 py-3 flex justify-center items-center gap-x-3 text-sm">
-              <img src={google} />
+              <img src={google} alt="" />
               Sign in with Google
             </button>
           </div>
@@ -66,7 +66,11 @@ function index() {
       </div>
 
       <div className=" h-full w-full">
-        <img src={dance} className="h-full w-full object-cover object-top" />
+        <img
+          src={dance}
+          alt=""
+          className="h-full w-full object-cover object-top"
+        />
       </div>
     </div>
   );
