@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.5",
+    "@apollo/client": "^3.7.9",
     "@iconscout/react-unicons": "^1.1.6",
     "graphql": "^16.6.0",
     "react": "^18.2.0",

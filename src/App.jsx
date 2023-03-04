@@ -2,6 +2,12 @@ import Login from "./pages/index";
 import Signup from "./pages/signup";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client";
 import Home from "./pages/home/index";
 import Detail from "./pages/home/Detail";
 import MainLayout from "./layout/index";
@@ -9,7 +15,7 @@ import CreateEvent from "./components/basic/Create_event";
 import Ticket from "./components/basic/Ticket";
 
 import PageNotFound from "./pages/404";
-
+import { useQuery, gql } from "@apollo/client";
 import "./App.css";
 
 function App() {
