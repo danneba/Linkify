@@ -4,9 +4,10 @@ import dance from "../assets/login-image.png";
 import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 import { NavLink, Link } from "react-router-dom";
-
 import { useMutation, gql } from "@apollo/client";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ADD_USER = gql`
   mutation (
@@ -26,7 +27,13 @@ const ADD_USER = gql`
     }
   }
 `;
+const notify = () => {
+  // toast("Default Notification !");
 
+  toast.success("Successfully registered !", {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
 function signup() {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -39,6 +46,7 @@ function signup() {
   if (loading) return "Submitting...";
   if (data) {
     console.log("The data is ", data);
+    notify();
     formData.first_name = "";
     formData.last_name = "";
     formData.email = "";
@@ -56,6 +64,7 @@ function signup() {
 
   return (
     <div className="h-screen flex justify-center w-full">
+      <ToastContainer />
       <div className="w-full flex flex-col gap-y-32 mt-20 ">
         <div className="mx-auto ">
           <img src={icon} alt="" />
