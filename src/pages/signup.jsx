@@ -3,25 +3,57 @@ import hi from "../assets/hi.svg";
 import dance from "../assets/login-image.png";
 import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
+import { NavLink, Link } from "react-router-dom";
 
-import { useQuery, gql } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
+import { useState } from "react";
 
-function query() {
-  const GET_LOCATIONS = gql`
-    query GetLocations {
-      users {
-        email
-        first_name
-        last_name
-      }
+const ADD_USER = gql`
+  mutation (
+    $email: String!
+    $first_name: String!
+    $last_name: String!
+    $password: String!
+  ) {
+    sign_up(
+      email: $email
+      first_name: $first_name
+      last_name: $last_name
+      password: $password
+    ) {
+      id
+      token
     }
-  `;
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
-  console.log(data);
-}
+  }
+`;
 
 function signup() {
-  query();
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
+  const [addUser, { data, loading, error }] = useMutation(ADD_USER);
+
+  if (loading) return "Submitting...";
+  if (data) {
+    console.log("The data is ", data);
+    formData.first_name = "";
+    formData.last_name = "";
+    formData.email = "";
+    formData.password = "";
+  }
+
+  if (error) return `Submission error! ${error.message}`;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Submitted the sign up form successful! ", formData);
+    const { email, first_name, last_name, password } = formData;
+    addUser({ variables: { email, first_name, last_name, password } });
+  }
+
   return (
     <div className="h-screen flex justify-center w-full">
       <div className="w-full flex flex-col gap-y-32 mt-20 ">
@@ -39,47 +71,73 @@ function signup() {
                 Welcome to an all in one place to fund events all around!!
               </p>
             </div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-y-2">
+              <label htmlFor="first_name">First Name</label>
+              <input
+                type="text"
+                id="first_name"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    first_name: e.target.value,
+                  })
+                }
+                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+              />
+              <label htmlFor="last_name" className="mt-2">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    last_name: e.target.value,
+                  })
+                }
+                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
+              />
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="email"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    email: e.target.value,
+                  })
+                }
+                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+              />
+              <label htmlFor="password" className="mt-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    password: e.target.value,
+                  })
+                }
+                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
+              />
+              <label htmlFor="email" className="mt-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirm_password"
+                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
+              />
 
-            <label htmlFor="first_name">First Name</label>
-            <input
-              type="text"
-              id="first_name"
-              className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
-            />
-            <label htmlFor="last_name" className="mt-2">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-            />
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
-            />
-            <label htmlFor="password" className="mt-2">
-              Password
-            </label>
-            <input
-              type="text"
-              id="password"
-              className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-            />
-            <label htmlFor="email" className="mt-2">
-              Confirm Password
-            </label>
-            <input
-              type="text"
-              id="confirm_password"
-              className="rounded py-2 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-            />
+              <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5">
+                Sign Up
+              </button>
+            </form>
 
-            <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5">
-              Sign Up
-            </button>
             <div className="flex justify-center items-center gap-x-5 font-light text-gray-500 mt-3">
               <p className="w-32 h-[1px] bg-gray-300"></p>
               <p>or</p>
@@ -88,7 +146,10 @@ function signup() {
             <div className="text-center">
               <h1>
                 Already Have an account?
-                <span className="font-semibold cursor-pointer">Login </span>
+                {/* <span className="font-semibold cursor-pointer">Login </span> */}
+                <Link className="font-semibold cursor-pointer" to={"/login"}>
+                  Login
+                </Link>
               </h1>
             </div>
           </div>
