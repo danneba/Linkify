@@ -5,38 +5,65 @@ import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 import { NavLink, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { UilSpinner } from "@iconscout/react-unicons";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { stringify } from "postcss";
 
-const ADD_USER = gql`
-  mutation (
-    $email: String!
-    $first_name: String!
-    $last_name: String!
-    $password: String!
-  ) {
-    sign_up(
-      email: $email
-      first_name: $first_name
-      last_name: $last_name
-      password: $password
-    ) {
+const GET_USER = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       id
+      email
+      first_name
+      last_name
       token
     }
   }
 `;
 
 function index() {
-  const [addUser] = useMutation(ADD_USER);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    price: 0,
+    email: "",
+    password: "",
   });
+
+  const [getUser, { loading, error, data }] = useMutation(GET_USER);
+
+  useEffect(() => {
+    if (data) {
+      console.log("The data is ", data);
+      navigate("/home");
+    }
+  }, [data]);
+
+  if (loading) {
+    toast.warning("WAITING FOR THE  registered !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  if (data) {
+    localStorage.setItem("token", JSON.stringify(data.login.token));
+    toast.success("Successfully Logged in !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    formData.email = "";
+    formData.password = "";
+  }
+  if (error) {
+    console.log("The error is ", JSON.stringify(error), error);
+    toast.warning(`Some error ! ${error}`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Submitted the login successful!");
+    const { email, password } = formData;
+
+    getUser({ variables: { email, password } });
   }
 
   return (
@@ -60,6 +87,9 @@ function index() {
               <label htmlFor="email">Email</label>
               <input
                 type="text"
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200
               "
               />
@@ -67,7 +97,7 @@ function index() {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
               />
               <div className="flex justify-between font-light">
@@ -77,9 +107,18 @@ function index() {
                 </p>
                 <p>Forget Password?</p>
               </div>
-              <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3">
-                Login
-              </button>
+              {loading ? (
+                <button
+                  disabled
+                  className="text-center cursor-pointer rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5 flex justify-center items-center"
+                >
+                  <UilSpinner className="animate-spin" />
+                </button>
+              ) : (
+                <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5 flex justify-center items-center">
+                  Login
+                </button>
+              )}
               <div className="flex justify-center items-center gap-x-5  font-light text-gray-500">
                 <p className="w-32 h-[1px] bg-gray-300"></p>
                 <p>or</p>

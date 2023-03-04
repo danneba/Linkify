@@ -5,9 +5,11 @@ import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 import { NavLink, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UilSpinner } from "@iconscout/react-unicons";
+import { useNavigate } from "react-router-dom";
 
 const ADD_USER = gql`
   mutation (
@@ -27,14 +29,9 @@ const ADD_USER = gql`
     }
   }
 `;
-const notify = () => {
-  // toast("Default Notification !");
-
-  toast.success("Successfully registered !", {
-    position: toast.POSITION.TOP_RIGHT,
-  });
-};
 function signup() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -43,21 +40,37 @@ function signup() {
   });
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
-  if (loading) return "Submitting...";
+  if (loading) {
+    toast.warning("WAITING FOR THE  registered !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
   if (data) {
-    console.log("The data is ", data);
-    notify();
+    localStorage.setItem("token", JSON.stringify(data.sign_up.token));
+    toast.success("Successfully registered !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     formData.first_name = "";
     formData.last_name = "";
     formData.email = "";
     formData.password = "";
   }
 
-  if (error) return `Submission error! ${error.message}`;
+  useEffect(() => {
+    if (data) {
+      navigate("/home");
+    }
+  }, [data]);
+
+  if (error) {
+    toast.error("Your email or password is incorrect please try again!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    return;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Submitted the sign up form successful! ", formData);
     const { email, first_name, last_name, password } = formData;
     addUser({ variables: { email, first_name, last_name, password } });
   }
@@ -141,10 +154,18 @@ function signup() {
                 id="confirm_password"
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
               />
-
-              <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5">
-                Sign Up
-              </button>
+              {loading ? (
+                <button
+                  disabled
+                  className="text-center cursor-pointer rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5 flex justify-center items-center"
+                >
+                  <UilSpinner className="animate-spin" />
+                </button>
+              ) : (
+                <button className="text-center rounded bg-mainRed text-white hover:bg-opacity-90 py-3 mt-5 flex justify-center items-center">
+                  Sign Up
+                </button>
+              )}
             </form>
 
             <div className="flex justify-center items-center gap-x-5 font-light text-gray-500 mt-3">
