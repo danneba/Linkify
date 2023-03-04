@@ -5,13 +5,14 @@ import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 
 import { useQuery, gql } from "@apollo/client";
+
 function query() {
   const GET_LOCATIONS = gql`
     query GetLocations {
-      login(email: "test@email.com", password: "12345678") {
+      users {
         email
-        address
         first_name
+        last_name
       }
     }
   `;
