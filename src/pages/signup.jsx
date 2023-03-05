@@ -87,7 +87,7 @@ function signup() {
             <div className="flex flex-col mb-5">
               <div className="flex">
                 <h1 className="text-4xl font-bold">Hey, there </h1>
-                <img src={hi} />
+                <img src={hi} alt="" />
               </div>
               <p className="font-normal text-sm">
                 Welcome to an all in one place to fund events all around!!

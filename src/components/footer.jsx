@@ -13,7 +13,7 @@ import { NavLink, Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-      <div className="h-96 w-full relative text-white mt-32 flex items-end">
+      <div className="h-96 w-full relative  text-white mt-32 flex items-end">
         <img
           src={footerBG}
           className="h-full absolute w-full bottom-0"

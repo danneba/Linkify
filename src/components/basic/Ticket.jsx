@@ -1,26 +1,51 @@
 import React from "react";
 import { useState } from "react";
+import { useMutation, gql } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
 // import avatar from "../assets/avatar.jpg";
-
+const Purchase_Ticket = gql`
+  mutation ($items: ticket_insert_input!) {
+    insert_ticket_one(object: $items) {
+      id
+    }
+  }
+`;
 function Ticket() {
-  const [form, setForm] = useState({
+  const navigate = useNavigate();
+
+  const [formData, setForm] = useState({
     first_name: "",
     last_name: "",
+    ticket_type: "",
+    type: "",
+    number: "",
     price: 0,
   });
 
-  let formData = {
-    total_price: form.price,
-    email: "example@gmail.com",
-    first_name: form.first_name,
-    last_name: form.last_name,
-    user: "Ephrem",
-  };
-
+  // let formData = {
+  //   total_price: form.price,
+  //   email: "example@gmail.com",
+  //   first_name: form.first_name,
+  //   last_name: form.last_name,
+  //   user: "Ephrem",
+  // };
+  const [addTicket, { data, loading, error }] = useMutation(Purchase_Ticket);
+  if (loading) {
+    toast.warning("waiting until the purchase of the ticket is done !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
   function handleSubmit(e) {
     e.preventDefault();
+    const { first_name, last_name, ticket_type, type, number } = formData;
+
+    addTicket({
+      variables: { first_name, last_name, ticket_type, type, number },
+    });
 
     console.log("Submit ---> ", formData);
 
@@ -54,9 +79,10 @@ function Ticket() {
       <div className="flex w-full mx-auto h-[800px] justify-center items-center">
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <label className="text-base font-normal text-[#2D2A56]">
-            Full name:
+            First name:
           </label>
           <input
+            id="first_name"
             type="text"
             onChange={(e) => {
               setForm({
@@ -71,9 +97,10 @@ function Ticket() {
           </label>
           <input
             type="text"
+            id="last_name"
             onChange={(e) => {
               setForm({
-                ...form,
+                ...formData,
                 last_name: e.target.value,
               });
             }}
@@ -83,9 +110,10 @@ function Ticket() {
             Ticket type:
           </label>
           <select
+            id="ticket_type"
             onChange={(e) => {
               setForm({
-                ...form,
+                ...formData,
                 price: e.target.value,
               });
             }}
@@ -96,7 +124,16 @@ function Ticket() {
             <option>20</option>
             <option>10</option>
           </select>
-          <select className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed">
+          <select
+            id="type"
+            onChange={(e) => {
+              setForm({
+                ...formData,
+                type: e.target.value,
+              });
+            }}
+            className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
+          >
             <option>VVIP - 40$</option>
             <option>VIP - 30$</option>
             <option>Orchestra Seats - 20$</option>
@@ -107,6 +144,13 @@ function Ticket() {
           </label>
           <input
             type="number"
+            id="amount"
+            onChange={(e) => {
+              setForm({
+                ...formData,
+                amount: e.target.value,
+              });
+            }}
             className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           />
           <div className="flex justify-end ">
