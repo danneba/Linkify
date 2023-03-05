@@ -9,12 +9,19 @@ import { default_apollo_client } from "./plugins/apollo";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+let persistor = persistStore(store);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <ToastContainer />
     <ApolloProvider client={default_apollo_client}>
       <Provider store={store}>
-        <App />
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </>

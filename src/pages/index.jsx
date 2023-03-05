@@ -10,6 +10,8 @@ import { UilSpinner } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { stringify } from "postcss";
+import { useSelector, useDispatch } from "react-redux";
+import { set, unset } from "../store/features/user/userSlice";
 
 const GET_USER = gql`
   mutation Login($email: String!, $password: String!) {
@@ -24,6 +26,7 @@ const GET_USER = gql`
 `;
 
 function index() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -34,7 +37,6 @@ function index() {
 
   useEffect(() => {
     if (data) {
-      console.log("The data is ", data);
       navigate("/home");
     }
   }, [data]);
@@ -45,7 +47,8 @@ function index() {
     });
   }
   if (data) {
-    localStorage.setItem("token", JSON.stringify(data.login.token));
+    // localStorage.setItem("token", JSON.stringify(data.login.token));
+    dispatch(set(JSON.stringify(data.login.token)));
     toast.success("Successfully Logged in !", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -53,7 +56,6 @@ function index() {
     formData.password = "";
   }
   if (error) {
-    console.log("The error is ", JSON.stringify(error), error);
     toast.warning(`Some error ! ${error}`, {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -98,6 +100,9 @@ function index() {
               </label>
               <input
                 type="password"
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                }}
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
               />
               <div className="flex justify-between font-light">
