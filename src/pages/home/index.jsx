@@ -6,13 +6,28 @@ import searchMain from "../../assets/search.png";
 import whiteIcon from "../../assets/icon-white.png";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { NavLink, Link } from "react-router-dom";
 import { UilStar, UilArrowDown } from "@iconscout/react-unicons";
 
 function home() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
   return (
     <div className="flex flex-col w-full h-full items-center overflow-x-clip">
+      <div>
+        The users are
+        {isAuthenticated && (
+          <div>
+            <img src={user.picture} alt={user.name} />
+            <h2>{user.name}</h2>
+            <p>{user.email}</p>
+          </div>
+        )}
+      </div>
       <div className="flex flex-col items-center justify-start w-full bg-main-pic bg-no-repeat bg-cover bg-g bg-center h-[600px] ">
         <div className=" w-full h-full bg-primary/30 backdrop-brightness-75">
           <div className="flex justify-center items-center mt-44 ">

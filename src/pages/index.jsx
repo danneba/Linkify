@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { stringify } from "postcss";
 import { useSelector, useDispatch } from "react-redux";
 import { set, unset } from "../store/features/user/userSlice";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const GET_USER = gql`
   mutation Login($email: String!, $password: String!) {
@@ -67,6 +68,39 @@ function index() {
 
     getUser({ variables: { email, password } });
   }
+  const { loginWithRedirect, logout } = useAuth0();
+
+  return (
+    <>
+      <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
+        <button
+          onClick={() =>
+            logout({ logoutParams: { returnTo: window.location.origin } })
+          }
+        >
+          Log Out
+        </button>
+        <br />
+        <button onClick={() => loginWithRedirect()}>Log In</button>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
+        <button
+          onClick={() =>
+            logout({ logoutParams: { returnTo: window.location.origin } })
+          }
+        >
+          Log Out
+        </button>
+        <br />
+        <button onClick={() => loginWithRedirect()}>Log In</button>
+      </div>
+    </>
+  );
 
   return (
     <div className="h-screen flex justify-center w-full">
