@@ -16,6 +16,8 @@ function Nav({ theme }) {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
+  const Name = useSelector((store) => store.user.userName);
+
   return (
     <div className="bg-primary w-full">
       <div className="flex justify-between px-10 z-30  w-full text-white">
@@ -35,20 +37,26 @@ function Nav({ theme }) {
           </div>
           {isLoggedIn ? (
             <div className="relative w-20 h-20 flex justify-center items-center">
-              <Popover className="absolute flex flex-col items-center border border-mainRed rounded-full outline-mainRed ">
-                <Popover.Button className="flex rounded-full w-12 h-12 bg-avatar-pic"></Popover.Button>
+              <Popover className="absolute flex flex-col items-center  rounded-full  ">
+                <Popover.Button className="flex  rounded-full w-12 h-12 justify-center items-center font-bold bg-mainRed shadow-xl text-white text-lg outline-none border-2 border-white ">
+                  {Name.slice(0, 2)}
+                </Popover.Button>
 
                 <Popover.Panel className="absolute top-16 z-10 w-44 bg-white text-primary rounded shadow-lg">
-                  <div className="flex flex-col my-5 w-full">
-                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg">
+                  <div classNameavatar-pic="flex flex-col my-5 w-full">
+                    <div className="mx-auto px-5 py-2 font-Lobster text-lg">
+                      Hi
+                      <span className=" text-mainRed pr-2"> {Name}</span>
+                    </div>
+                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
                       <UilUser className="h-5 text-mainRed" />
                       Profile
                     </button>
-                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg">
+                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
                       <UilBookmark className="h-5 text-mainRed" />
                       Wish List
                     </button>
-                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg">
+                    <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
                       <UilArrowGrowth className="h-5 text-mainRed" />
                       Stat
                     </button>
@@ -56,7 +64,7 @@ function Nav({ theme }) {
                       onClick={() => {
                         dispatch(unset());
                       }}
-                      className="font-semibold bg-primary flex gap-x-3 text-white px-5 py-3 mt-3 hover:bg-opacity-80 w-[80%] mx-auto rounded-full shadow-lg"
+                      className="font-semibold bg-primary flex gap-x-3 text-white px-5 py-3 mt-3 hover:bg-opacity-80 w-full mx-auto  shadow-lg"
                     >
                       <UilSignOutAlt className="h-6" />
                       Logout

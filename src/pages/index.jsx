@@ -55,11 +55,6 @@ function index() {
     }
   }, [data]);
 
-  if (loading) {
-    console.log("loading");
-    return <div className="w-screen mx-auto">Loading</div>;
-  }
-
   if (data) {
     console.log("The data after submit is ", data);
     dispatch(set(JSON.stringify(data.login.token)));

@@ -10,7 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 
 import { NavLink, Link } from "react-router-dom";
-import { UilStar, UilArrowDown } from "@iconscout/react-unicons";
+import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
 
 const GET_CATEGORIES = gql`
   query get_categories {
@@ -29,9 +29,7 @@ function home() {
   } = useQuery(GET_CATEGORIES);
 
   if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
-  if (getCategoriesLoading) {
-    return <div>Loading</div>;
-  }
+
   return (
     <div className="flex flex-col w-full h-full items-center overflow-x-clip">
       <div className="flex flex-col items-center justify-start w-full bg-main-pic bg-no-repeat bg-cover bg-g bg-center h-[600px] ">
@@ -69,35 +67,27 @@ function home() {
           <div className="flex  rounded-3xl items-center cursor-pointer justify-center h-12 px-10 min-w-min bg-gray-300">
             All
           </div>
-          <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
-            {getCategoriesDone?.items.map((val) => (
-              <div
-                className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
-                key={val.id}
-              >
-                {val.category}
-              </div>
-            ))}
-          </div>
-
-          {/* <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div> */}
+          {getCategoriesLoading ? (
+            <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
+              {getCategoriesDone?.items.map((val) => (
+                <div
+                  className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
+                  key={val.id}
+                >
+                  {val.category}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="text-left mt-10">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">

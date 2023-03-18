@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useDispatch } from "react-router-dom";
 
 const ADD_USER = gql`
   mutation (
@@ -38,6 +38,7 @@ const ADD_USER = gql`
   }
 `;
 function HostSignUp() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -54,7 +55,9 @@ function HostSignUp() {
     });
   }
   if (data) {
-    localStorage.setItem("token", JSON.stringify(data.hostSignup.token));
+    dispatch(set(JSON.stringify(data.hostSignup.token)));
+
+    // localStorage.setItem("token", JSON.stringify(data.hostSignup.token));
     toast.success("Successfully registered !", {
       position: toast.POSITION.TOP_RIGHT,
     });
