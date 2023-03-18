@@ -4,7 +4,7 @@ import dance from "../assets/login-image.png";
 import icon from "../assets/icon-dark.svg";
 import google from "../assets/Google.svg";
 import { NavLink, Link } from "react-router-dom";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation, useQuery, gql } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { UilSpinner } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
@@ -26,15 +26,28 @@ const GET_USER = gql`
   }
 `;
 
+const GET_HOST_USER = gql`
+  mutation Login($email: String!, $password: String!) {
+    hostLogin(email: $email, password: $password) {
+      id
+      email
+      token
+    }
+  }
+`;
+
 function index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    isHost: false,
   });
 
-  const [getUser, { loading, error, data }] = useMutation(GET_USER);
+  const [getUser, { loading, error, data }] = useMutation(
+    formData.isHost ? GET_HOST_USER : GET_USER
+  );
 
   useEffect(() => {
     if (data) {
@@ -43,16 +56,19 @@ function index() {
   }, [data]);
 
   if (loading) {
-    toast.warning("WAITING FOR THE  registered !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    console.log("loading");
+    return <div className="w-screen mx-auto">Loading</div>;
   }
+
   if (data) {
-    // localStorage.setItem("token", JSON.stringify(data.login.token));
+    console.log("The data after submit is ", data);
     dispatch(set(JSON.stringify(data.login.token)));
-    toast.success("Successfully Logged in !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+
+    // localStorage.setItem("token", JSON.stringify(data.login.token));
+    // toast.success("Successfully Logged in !", {
+    //   position: toast.POSITION.TOP_RIGHT,
+    // });
+
     formData.email = "";
     formData.password = "";
   }
@@ -64,43 +80,43 @@ function index() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { email, password } = formData;
+    const { email, password, isHost } = formData;
 
     getUser({ variables: { email, password } });
   }
-  const { loginWithRedirect, logout } = useAuth0();
+  // const { loginWithRedirect, logout } = useAuth0();
 
-  return (
-    <>
-      <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
-        <button
-          onClick={() =>
-            logout({ logoutParams: { returnTo: window.location.origin } })
-          }
-        >
-          Log Out
-        </button>
-        <br />
-        <button onClick={() => loginWithRedirect()}>Log In</button>
-      </div>
-    </>
-  );
+  // return (
+  //   <>
+  //     <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
+  //       <button
+  //         onClick={() =>
+  //           logout({ logoutParams: { returnTo: window.location.origin } })
+  //         }
+  //       >
+  //         Log Out
+  //       </button>
+  //       <br />
+  //       <button onClick={() => loginWithRedirect()}>Log In</button>
+  //     </div>
+  //   </>
+  // );
 
-  return (
-    <>
-      <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
-        <button
-          onClick={() =>
-            logout({ logoutParams: { returnTo: window.location.origin } })
-          }
-        >
-          Log Out
-        </button>
-        <br />
-        <button onClick={() => loginWithRedirect()}>Log In</button>
-      </div>
-    </>
-  );
+  // return (
+  //   <>
+  //     <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
+  //       <button
+  //         onClick={() =>
+  //           logout({ logoutParams: { returnTo: window.location.origin } })
+  //         }
+  //       >
+  //         Log Out
+  //       </button>
+  //       <br />
+  //       <button onClick={() => loginWithRedirect()}>Log In</button>
+  //     </div>
+  //   </>
+  // );
 
   return (
     <div className="h-screen flex justify-center w-full">
@@ -145,6 +161,18 @@ function index() {
                   Remember me
                 </p>
                 <p>Forget Password?</p>
+              </div>
+              <div>
+                <p className="font-Lobster">
+                  <input
+                    type="checkbox"
+                    className="mr-2 cursor-pointer "
+                    onChange={(e) => {
+                      setFormData({ ...formData, isHost: e.target.value });
+                    }}
+                  />
+                  Login as <span className=" text-mainRed">HOST </span>
+                </p>
               </div>
               {loading ? (
                 <button

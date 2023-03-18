@@ -8,7 +8,7 @@ import { useMutation, gql } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UilSpinner } from "@iconscout/react-unicons";
+import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 
 const ADD_USER = gql`
@@ -82,15 +82,15 @@ function signup() {
         <div className="mx-auto ">
           <img src={icon} alt="" />
         </div>
-        <div className="flex flex-col  justify-center w-full items-center bg-red-30 -mt-20">
-          <div className="flex flex-col text-left h-96 gap-y-2 bg-red-30 w-[50%]  text-sm">
+        <div className="flex   justify-center w-full items-center bg-red-30 -mt-20 relative">
+          <div className="flex flex-col text-left h-96 gap-y-2 bg-red-30  text-sm ">
             <div className="flex flex-col mb-5">
               <div className="flex">
                 <h1 className="text-4xl font-bold">Hey, there </h1>
                 <img src={hi} alt="" />
               </div>
               <p className="font-normal text-sm">
-                Welcome to an all in one place to fund events all around!!
+                Welcome to an all in one place to find events all around!!
               </p>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-y-2">
@@ -177,12 +177,22 @@ function signup() {
               <h1>
                 Already Have an account?
                 {/* <span className="font-semibold cursor-pointer">Login </span> */}
-                <Link className="font-semibold cursor-pointer" to={"/login"}>
+                <Link
+                  className="font-semibold cursor-pointer ml-2"
+                  to={"/login"}
+                >
                   Login
                 </Link>
               </h1>
             </div>
           </div>
+          <Link
+            to={"/hostSignup"}
+            className="group w-20px absolute right-10 top-0 gap-x-4 flex hover:text-white font-Lobster cursor-pointer hover:bg-mainRed px-3 py-1.5 rounded"
+          >
+            Host SignUp
+            <UilAngleRightB className="text-black group-hover:text-white" />
+          </Link>
         </div>
       </div>
 

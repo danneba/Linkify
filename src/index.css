@@ -13,12 +13,12 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #001235;
+  background: #ffffff;
 }
 
 /* Handle */

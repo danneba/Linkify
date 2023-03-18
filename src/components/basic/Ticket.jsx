@@ -86,7 +86,7 @@ function Ticket() {
             type="text"
             onChange={(e) => {
               setForm({
-                ...form,
+                ...formData,
                 first_name: e.target.value,
               });
             }}

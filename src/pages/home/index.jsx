@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import firstSection from "../../assets/main.png";
 import reactMain from "../../assets/main.svg";
@@ -7,27 +7,33 @@ import whiteIcon from "../../assets/icon-white.png";
 import Nav from "../../components/nav";
 import Footer from "../../components/footer";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useQuery, gql } from "@apollo/client";
 
 import { NavLink, Link } from "react-router-dom";
 import { UilStar, UilArrowDown } from "@iconscout/react-unicons";
 
+const GET_CATEGORIES = gql`
+  query get_categories {
+    items: categories {
+      category
+      id
+    }
+  }
+`;
+
 function home() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  if (isLoading) {
-    return <div>Loading ...</div>;
+  const {
+    loading: getCategoriesLoading,
+    error: getCategoriesError,
+    data: getCategoriesDone,
+  } = useQuery(GET_CATEGORIES);
+
+  if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
+  if (getCategoriesLoading) {
+    return <div>Loading</div>;
   }
   return (
     <div className="flex flex-col w-full h-full items-center overflow-x-clip">
-      <div>
-        The users are
-        {isAuthenticated && (
-          <div>
-            <img src={user.picture} alt={user.name} />
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
-          </div>
-        )}
-      </div>
       <div className="flex flex-col items-center justify-start w-full bg-main-pic bg-no-repeat bg-cover bg-g bg-center h-[600px] ">
         <div className=" w-full h-full bg-primary/30 backdrop-brightness-75">
           <div className="flex justify-center items-center mt-44 ">
@@ -59,11 +65,22 @@ function home() {
         </div>
       </div>
       <div className="flex flex-col px-5 w-[75%]  gap-y-5 mt-10 ">
-        <div className="flex items-center justify-center gap-x-8  ">
-          <div className="flex  rounded-3xl items-center justify-center h-12 px-10 min-w-min bg-gray-300">
+        <div className="flex items-center gap-x-8 w-full h-20">
+          <div className="flex  rounded-3xl items-center cursor-pointer justify-center h-12 px-10 min-w-min bg-gray-300">
             All
           </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
+          <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
+            {getCategoriesDone?.items.map((val) => (
+              <div
+                className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
+                key={val.id}
+              >
+                {val.category}
+              </div>
+            ))}
+          </div>
+
+          {/* <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
           </div>
           <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
@@ -80,10 +97,7 @@ function home() {
           </div>
           <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
             Sport
-          </div>
-          <div className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-min text-white">
-            Sport
-          </div>
+          </div> */}
         </div>
         <div className="text-left mt-10">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">

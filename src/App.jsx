@@ -1,5 +1,7 @@
 import Login from "./pages/index";
 import Signup from "./pages/signup";
+import HostSignUp from "./pages/HostSignUp";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import {
@@ -16,7 +18,6 @@ import Ticket from "./components/basic/Ticket";
 
 import PageNotFound from "./pages/404";
 import { useQuery, gql } from "@apollo/client";
-import "./App.css";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/hostSignUp" element={<HostSignUp />} />
           {/* <Route path="home" element={<MainLayout theme="dark" />}> */}
           <Route path="/" element={<MainLayout />}>
             <Route path="home" element={<Home />} />
