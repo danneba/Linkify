@@ -8,31 +8,24 @@ import Nav from "../../components/nav";
 import Footer from "../../components/footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
+import { useSelector } from "react-redux";
+import categories from "../../queries/categories.js";
 
 import { NavLink, Link } from "react-router-dom";
 import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
-
-const GET_CATEGORIES = gql`
-  query get_categories {
-    items: categories {
-      category
-      id
-    }
-  }
-`;
 
 function home() {
   const {
     loading: getCategoriesLoading,
     error: getCategoriesError,
     data: getCategoriesDone,
-  } = useQuery(GET_CATEGORIES);
+  } = useQuery(categories);
 
   if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
 
   return (
     <div className="flex flex-col w-full h-full items-center overflow-x-clip">
-      <div className="flex flex-col items-center justify-start w-full bg-main-pic bg-no-repeat bg-cover bg-g bg-center h-[600px] ">
+      <div className="flex flex-col items-center justify-start w-full bg-main-pic bg-no-repeat bg-cover bg-g bg-center h-[600px] relative">
         <div className=" w-full h-full bg-primary/30 backdrop-brightness-75">
           <div className="flex justify-center items-center mt-44 ">
             <div className="flex flex-col justify-start items-center gap-5 w-full">

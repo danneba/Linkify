@@ -9,7 +9,8 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
-import { useNavigate, useDispatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const ADD_USER = gql`
   mutation (

@@ -45,7 +45,7 @@ function index() {
     isHost: false,
   });
 
-  const [getUser, { loading, error, data }] = useMutation(
+  const [getUser, { loading, error: loginError, data }] = useMutation(
     formData.isHost ? GET_HOST_USER : GET_USER
   );
 
@@ -56,21 +56,19 @@ function index() {
   }, [data]);
 
   if (data) {
-    console.log("The data after submit is ", data);
-    dispatch(set(JSON.stringify(data.login.token)));
-
-    // localStorage.setItem("token", JSON.stringify(data.login.token));
-    // toast.success("Successfully Logged in !", {
-    //   position: toast.POSITION.TOP_RIGHT,
-    // });
+    if (formData.isHost === "on") {
+      dispatch(
+        set({ token: JSON.stringify(data.hostLogin.token), isHost: true })
+      );
+    } else {
+      dispatch(set({ token: JSON.stringify(data.login.token), isHost: false }));
+    }
 
     formData.email = "";
     formData.password = "";
   }
-  if (error) {
-    toast.warning(`Some error ! ${error}`, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+  if (loginError) {
+    console.log("loginError ", { ...loginError }, loginError.message);
   }
 
   function handleSubmit(e) {
@@ -150,6 +148,13 @@ function index() {
                 }}
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
               />
+              {loginError ? (
+                <p className="text-red-500 text-sm -mt-6">
+                  {loginError.message}
+                </p>
+              ) : (
+                ""
+              )}
               <div className="flex justify-between font-light">
                 <p>
                   <input type="checkbox" className="mr-2 cursor-pointer" />

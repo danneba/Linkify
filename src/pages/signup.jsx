@@ -9,7 +9,8 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
-import { useNavigate, useDispatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const ADD_USER = gql`
   mutation (
@@ -41,13 +42,8 @@ function signup() {
   });
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
-  if (loading) {
-    toast.warning("WAITING FOR THE  registered !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
   if (data) {
-    dispatch(set(JSON.stringify(data.hostSignup.token)));
+    dispatch(set(JSON.stringify(data.sign_up.token)));
 
     // localStorage.setItem("token", JSON.stringify(data.sign_up.token));
     toast.success("Successfully registered !", {

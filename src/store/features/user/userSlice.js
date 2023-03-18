@@ -6,6 +6,7 @@ const initialState = {
   userId: "",
   userName: "",
   isLoggedIn: false,
+  isHost: false,
 };
 
 const userSlice = createSlice({
@@ -13,13 +14,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     set: (state, { payload }) => {
-      localStorage.setItem("token", payload);
-      let val = payload.split(".")[1];
+      console.log("The payload is ", payload);
+      localStorage.setItem("token", payload.token);
+      let val = payload.token.split(".")[1];
       val = JSON.parse(window.atob(val));
       state.isLoggedIn = true;
       state.token = localStorage.getItem("token");
       state.userId = val.sub;
       state.userName = val.name;
+      state.isHost = payload.isHost;
     },
     unset: (state, action) => {
       localStorage.removeItem("token");

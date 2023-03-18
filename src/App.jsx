@@ -1,6 +1,7 @@
 import Login from "./pages/index";
 import Signup from "./pages/signup";
 import HostSignUp from "./pages/HostSignUp";
+import AddEvent from "./pages/home/AddEvent";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -32,6 +33,8 @@ function App() {
             <Route path="home" element={<Home />} />
             <Route index element={<Home />} />
             <Route path=":venueId" element={<Detail />} />
+            <Route path="/add-event" element={<AddEvent />} />
+
             <Route path="/register" element={<CreateEvent />} />
             <Route path="/venue/get-ticket" element={<Ticket />} />
           </Route>
