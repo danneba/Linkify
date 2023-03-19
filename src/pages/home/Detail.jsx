@@ -58,12 +58,15 @@ function Detail() {
   return (
     <div className=" h-full flex w-[70%] mx-auto m-5  ">
       {getSingleEventLoading ? (
-        <div className=" h-full flex w-[70%] mx-auto m-5 ">Loading</div>
+        <div className=" h-full flex w-[70%] mx-auto m-5 ">
+          <UilSpinner className="text-mainRed w-20 h - 20 animate-spin" />
+        </div>
       ) : (
         <div className="flex flex-col w-full gap-4">
           <div className="flex w-full gap-4 p-4  items-center">
             <div className="flex  rounded-full w-12 h-12 justify-center items-center font-bold shadow-xl text-white text-lg outline-none border-2 border-red-300 bg-teal-500 ">
-              {getSingleEventDone?.items?.host?.host_name.slice(0, 2)}
+              {getSingleEventDone?.items?.host?.host_name.slice(0, 2) ||
+                getSingleEventDone?.items?.name.slice(0, 2)}
             </div>
             asd {getSingleEventDone.items.host_name}ads
             <div className="flex flex-col ">

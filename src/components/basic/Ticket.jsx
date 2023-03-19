@@ -29,8 +29,10 @@ function Ticket() {
     last_name: "",
     ticket_type: "",
     type: "",
-    number: "",
+    email: "example@gmail.com",
+    number: 0,
     price: 0,
+    total_price: 200,
   });
 
   // let formData = {
@@ -54,8 +56,11 @@ function Ticket() {
     //   variables: { first_name, last_name, ticket_type, type, number },
     // });
 
+    setForm({
+      ...formData,
+      total_price: formData.price * formData.number,
+    });
     console.log("Submit ---> ", formData);
-
     fetch("https://linkify-backend.onrender.com/getTicket", {
       method: "POST",
       headers: {
@@ -131,7 +136,7 @@ function Ticket() {
           </div>
           <div className="flex flex-col gap-3 ">
             <label className=" text-base font-semibold text-[#2D2A56]">
-              Price
+              New Price
             </label>
             <Select
               defaultValue={"Select"}
@@ -144,6 +149,18 @@ function Ticket() {
               }}
             />
           </div>
+          <label className=" text-base font-normal text-[#2D2A56]">Price</label>
+          <input
+            type="number"
+            id="amount"
+            onChange={(e) => {
+              setForm({
+                ...formData,
+                price: e.target.value,
+              });
+            }}
+            className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
+          />
           <label className=" text-base font-normal text-[#2D2A56]">
             How many tickets do you need:
           </label>
@@ -153,7 +170,7 @@ function Ticket() {
             onChange={(e) => {
               setForm({
                 ...formData,
-                amount: e.target.value,
+                number: e.target.value,
               });
             }}
             className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
