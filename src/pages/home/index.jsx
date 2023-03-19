@@ -11,6 +11,7 @@ import { useQuery, gql } from "@apollo/client";
 import { useSelector } from "react-redux";
 import categories from "../../queries/categories.js";
 import { popularEvents, upcomingEvents, allEvents } from "../../queries/Event";
+import { format, differenceInDays } from "date-fns";
 
 import { NavLink, Link } from "react-router-dom";
 import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
@@ -281,6 +282,7 @@ function home() {
             {getAllEventDone.items.map((val) => (
               <Link
                 to={`/vacancy?${val.id}`}
+                key={val.id}
                 className="cursor-pointer flex flex-col justify-center gap-y-5  h-[450px]"
               >
                 <div
@@ -296,9 +298,13 @@ function home() {
                       {val.location}
                     </p>
                     <p className="font-medium text-gray-600 text-sm">
-                      Jan 2 - 3{" "}
+                      {format(new Date(val.start_date), "YYY MMM dd ")} -
+                      {format(new Date(val.end_date), " MMM  dd")}
                     </p>
-                    <p className="font-bold">Free</p>
+                    {differenceInDays(new Date(val.end_date), new Date()) >=
+                      0 && <p className="font-bold text-green-500">Upcoming</p>}
+                    {differenceInDays(new Date(val.end_date), new Date()) <
+                      0 && <p className="font-bold text-red-500">Expired</p>}
                   </div>
                   <div className="flex flex-col gap-2 items-center  ">
                     <UilStar className="text-mainRed cursor-pointer" />
