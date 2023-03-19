@@ -281,7 +281,7 @@ function home() {
           <div className="grid grid-cols-4 w-full gap-10 gap-x-5 overflow-x-auto">
             {getAllEventDone.items.map((val) => (
               <Link
-                to={`/vacancy?${val.id}`}
+                to={`/vacancy?id=${val.id}&cat=${val.category}`}
                 key={val.id}
                 className="cursor-pointer flex flex-col justify-center gap-y-5  h-[450px]"
               >

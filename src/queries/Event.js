@@ -53,7 +53,7 @@ const upcomingEvents = gql`
   }
 `;
 const allEvents = gql`
-  query popularEvents($limit: Int, $where: events_bool_exp) {
+  query allEvents($limit: Int, $where: events_bool_exp) {
     items: events(
       limit: $limit
       order_by: { created_at: desc }
@@ -76,5 +76,42 @@ const allEvents = gql`
     }
   }
 `;
+const getOneEvent = gql`
+  query getOneEvents($id: uuid!) {
+    items: events_by_pk(id: $id) {
+      id
+      image
+      location
+      name
+      rating
+      start_date
+      thumbnail
+      updated_at
+      view
+      host_id
+      end_date
+      description
+      created_at
+      category
+      host {
+        host_name
+      }
+    }
+  }
+`;
+const addWishlist = gql`
+  mutation wishlist($event_id: uuid!) {
+    insert_bookmarks(objects: { event_id: $event_id }) {
+      affected_rows
+    }
+  }
+`;
 
-export { AddEvent, popularEvents, upcomingEvents, allEvents };
+export {
+  AddEvent,
+  popularEvents,
+  upcomingEvents,
+  allEvents,
+  getOneEvent,
+  addWishlist,
+};
