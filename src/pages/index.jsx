@@ -13,28 +13,8 @@ import { stringify } from "postcss";
 import { useSelector, useDispatch } from "react-redux";
 import { set, unset } from "../store/features/user/userSlice";
 import { useAuth0 } from "@auth0/auth0-react";
-
-const GET_USER = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-      first_name
-      last_name
-      token
-    }
-  }
-`;
-
-const GET_HOST_USER = gql`
-  mutation Login($email: String!, $password: String!) {
-    hostLogin(email: $email, password: $password) {
-      id
-      email
-      token
-    }
-  }
-`;
+import login from "../queries/login";
+import Host_Login from "../queries/hostLogin";
 
 function index() {
   const dispatch = useDispatch();
@@ -46,7 +26,7 @@ function index() {
   });
 
   const [getUser, { loading, error: loginError, data }] = useMutation(
-    formData.isHost ? GET_HOST_USER : GET_USER
+    formData.isHost ? Host_Login : login
   );
 
   useEffect(() => {
@@ -57,11 +37,9 @@ function index() {
 
   if (data) {
     if (formData.isHost === "on") {
-      dispatch(
-        set({ token: JSON.stringify(data.hostLogin.token), isHost: true })
-      );
+      dispatch(set({ token: data.hostLogin.token, isHost: true }));
     } else {
-      dispatch(set({ token: JSON.stringify(data.login.token), isHost: false }));
+      dispatch(set({ token: data.login.token, isHost: false }));
     }
 
     formData.email = "";

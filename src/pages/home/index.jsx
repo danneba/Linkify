@@ -10,16 +10,44 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 import { useSelector } from "react-redux";
 import categories from "../../queries/categories.js";
+import { popularEvents, upcomingEvents, allEvents } from "../../queries/Event";
 
 import { NavLink, Link } from "react-router-dom";
 import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
 
 function home() {
+  const [limit, setLimit] = useState(2);
   const {
     loading: getCategoriesLoading,
     error: getCategoriesError,
     data: getCategoriesDone,
   } = useQuery(categories);
+  const {
+    loading: getUpcomingEventLoading,
+    error: getUpcomingEventError,
+    data: getUpcomingEventDone,
+  } = useQuery(upcomingEvents, {
+    variables: { limit: 8 },
+  });
+
+  const {
+    loading: getAllEventLoading,
+    error: getAllEventError,
+    data: getAllEventDone,
+  } = useQuery(allEvents, {
+    variables: { limit: 16 },
+  });
+
+  const {
+    loading: getPopularEventLoading,
+    error: getPopularEventError,
+    data: getPopularEventDone,
+  } = useQuery(popularEvents, {
+    variables: { limit: 2 },
+  });
+  if (getPopularEventDone) {
+    console.log("The events are ", getPopularEventDone);
+  }
 
   if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
 
@@ -74,9 +102,9 @@ function home() {
               {getCategoriesDone?.items.map((val) => (
                 <div
                   className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
-                  key={val.id}
+                  key={val.value}
                 >
-                  {val.category}
+                  {val.label}
                 </div>
               ))}
             </div>
@@ -88,14 +116,43 @@ function home() {
           </p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
         </div>
-        <div className="grid grid-cols-2 w-full gap-x-5">
-          <div className="flex flex-col">
-            <div className="flex h-full shadow-lg bg-main-pic bg-cover bg-center rounded bg-red-200"></div>
+        {getPopularEventLoading ? (
+          <div className="grid grid-cols-2 w-full gap-x-5 h-96">
+            <div className="flex flex-col">
+              <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <div className="flex w-full h-96 shadow-lg bg-tren-pic bg-no-repeat bg-start bg-left rounded"></div>
+        ) : (
+          <div className="grid grid-cols-2 w-full gap-x-5">
+            {getPopularEventDone.items.map((val) => (
+              <div className="flex flex-col" key={val.id}>
+                {/* <div style={`background-image: url('${val.image}')`}></div> */}
+
+                <div
+                  className="bg-cover group cursor-pointer bg-center shadow-xl h-96 rounded flex justify-center items-end"
+                  style={{
+                    backgroundImage: `url('${val.image}')`,
+                  }}
+                >
+                  <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
+                    <span className="text-white absolute bottom-10">
+                      {val.name}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            ))}
+            {/* <div className="flex flex-col">
+              <div className="flex h-full shadow-lg bg-main-pic bg-cover bg-center rounded bg-red-200"></div>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex w-full h-96 shadow-lg bg-tren-pic bg-no-repeat bg-start bg-left rounded"></div>
+            </div> */}
           </div>
-        </div>
+        )}
       </div>
       <div className="flex flex-col px-5 w-[75%] h-full mt-5">
         <div className="text-left mb-5">
@@ -104,16 +161,39 @@ function home() {
           </p>
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
         </div>
-        <div className="grid grid-cols-4 w-full gap-5">
-          <div className="flex shadow-lg rounded w-[100%]  bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-main-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-event-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-event-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%] h-80 bg-main-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex shadow-lg rounded w-[100%]  bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-        </div>
+        {getUpcomingEventLoading ? (
+          <div className="grid grid-cols-4 w-full gap-5">
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 w-full gap-5">
+            {getUpcomingEventDone.items.map((val) => (
+              <div className="flex flex-col" key={val.id}>
+                {/* <div style={`background-image: url('${val.image}')`}></div> */}
+
+                <div
+                  className="bg-cover group cursor-pointer bg-center shadow-xl h-80 rounded flex justify-center items-end"
+                  style={{
+                    backgroundImage: `url('${val.image}')`,
+                  }}
+                >
+                  <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
+                    <span className="text-white absolute bottom-10">
+                      {val.name}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex flex-col px-5 w-[75%] h-full mt-10">
         <div className="text-left mb-5">
@@ -137,224 +217,98 @@ function home() {
           <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
         </div>
 
-        <div className="grid grid-cols-4 w-full gap-y-5 overflow-x-auto">
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/wendy.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
+        {getAllEventLoading ? (
+          <div className="grid grid-cols-4 w-full gap-y-5 overflow-x-auto">
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
               </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
+              <div className="bg- w-full cursor-pointer rounded h-[75%] bg-gray-300 animate-pulse  " />
+              <div className="flex justify-between  gap-x-5">
+                <div className="flex flex-col bg-gray-300 animate-pulse h-14 w-40"></div>
+                <div className="flex gap-2 bg-gray-300 animate-pulse h-5 w-14"></div>
               </div>
             </div>
           </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/main.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
+        ) : (
+          <div className="grid grid-cols-4 w-full gap-10 gap-x-5 overflow-x-auto">
+            {getAllEventDone.items.map((val) => (
+              <Link
+                to={`/vacancy?${val.id}`}
+                className="cursor-pointer flex flex-col justify-center gap-y-5  h-[450px]"
+              >
+                <div
+                  className="bg-cover group cursor-pointer bg-center shadow-xl h-96 rounded flex justify-center items-end"
+                  style={{
+                    backgroundImage: `url('${val.image}')`,
+                  }}
+                ></div>
+                <div className="flex justify-between h-min ">
+                  <div className="flex flex-col">
+                    <h1 className="font-bold">{val.name}</h1>
+                    <p className="font-medium text-gray-600 text-sm">
+                      {val.location}
+                    </p>
+                    <p className="font-medium text-gray-600 text-sm">
+                      Jan 2 - 3{" "}
+                    </p>
+                    <p className="font-bold">Free</p>
+                  </div>
+                  <div className="flex flex-col gap-2 items-center  ">
+                    <UilStar className="text-mainRed cursor-pointer" />
+                    {val.rating}
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/events.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/wendy.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/main.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/events.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/main.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/wendy.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/events.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/main.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/tren.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2 ">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-y-5 w-[96%]  h-[450px] p-5 ">
-            {/* <div className="flex rounded w-full h-full  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div> */}
-            <div className="bg-[url('./assets/trending.jpg')] w-full cursor-pointer rounded h-full bg-cover bg-bottom " />
-            <div className="flex justify-between h-min ">
-              <div className="flex flex-col">
-                <h1 className="font-bold">Rophnan Concert</h1>
-                <p className="font-medium text-gray-600 text-sm">
-                  Millennium Adarash
-                </p>
-                <p className="font-medium text-gray-600 text-sm">Jan 2 - 3 </p>
-                <p className="font-bold">Free</p>
-              </div>
-              <div className="flex gap-2">
-                <UilStar className="text-mainRed cursor-pointer" />
-                4.5
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
       <div className="rounded bg-mainRed text-white  px-10 py-3 mt-14 group flex gap-x-2 cursor-pointer hover:bg-opacity-90">
         See more

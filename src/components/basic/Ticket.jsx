@@ -17,6 +17,13 @@ const Purchase_Ticket = gql`
 function Ticket() {
   const navigate = useNavigate();
 
+  const ticket_type = [
+    { value: "free", label: "Free" },
+    { value: "vip", label: "VIP" },
+    { value: "vvip", label: "VVIP" },
+    { value: "general_admission", label: "General Admission" },
+  ];
+
   const [formData, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -43,9 +50,9 @@ function Ticket() {
     e.preventDefault();
     const { first_name, last_name, ticket_type, type, number } = formData;
 
-    addTicket({
-      variables: { first_name, last_name, ticket_type, type, number },
-    });
+    // addTicket({
+    //   variables: { first_name, last_name, ticket_type, type, number },
+    // });
 
     console.log("Submit ---> ", formData);
 
@@ -106,39 +113,37 @@ function Ticket() {
             }}
             className="h-12 w-[447px] px-4 py-4 caret-[#EF5DA8] rounded-[6px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
           />
-          <label className=" text-base font-normal text-[#2D2A56]">
-            Ticket type:
-          </label>
-          <select
-            id="ticket_type"
-            onChange={(e) => {
-              setForm({
-                ...formData,
-                price: e.target.value,
-              });
-            }}
-            className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
-          >
-            <option>40</option>
-            <option>30</option>
-            <option>20</option>
-            <option>10</option>
-          </select>
-          <select
-            id="type"
-            onChange={(e) => {
-              setForm({
-                ...formData,
-                type: e.target.value,
-              });
-            }}
-            className="flex  rounded-[6px] px-4 py-2 caret-[#EF5DA8] h-12 w-[447px] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
-          >
-            <option>VVIP - 40$</option>
-            <option>VIP - 30$</option>
-            <option>Orchestra Seats - 20$</option>
-            <option>General Admissions - 10$</option>
-          </select>
+
+          <div className="flex flex-col gap-3 ">
+            <label className=" text-base font-semibold text-[#2D2A56]">
+              Available Ticket type
+            </label>
+            <Select
+              defaultValue={"Select"}
+              name="ticket"
+              options={ticket_type}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(value, action) => {
+                console.log("The cat is ", value);
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-3 ">
+            <label className=" text-base font-semibold text-[#2D2A56]">
+              Price
+            </label>
+            <Select
+              defaultValue={"Select"}
+              name="ticket"
+              options={ticket_type}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(value, action) => {
+                console.log("The cat is ", value);
+              }}
+            />
+          </div>
           <label className=" text-base font-normal text-[#2D2A56]">
             How many tickets do you need:
           </label>

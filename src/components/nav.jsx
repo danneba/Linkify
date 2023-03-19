@@ -51,12 +51,12 @@ function Nav({ theme }) {
                 </Link>
               )}
               <div className="relative w-20 h-20 flex justify-center items-center">
-                <Popover className="absolute flex flex-col items-center  rounded-full  ">
-                  <Popover.Button className="flex  rounded-full w-12 h-12 justify-center items-center font-bold bg-mainRed shadow-xl text-white text-lg outline-none border-2 border-white ">
+                <Popover className="absolute flex flex-col items-center rounded-full  ">
+                  <Popover.Button className="flex  rounded-full w-12 h-12 justify-center items-center font-bold shadow-xl text-white text-lg outline-none border-2 border-red-300 bg-mainRed ">
                     {Name.slice(0, 2)}
                   </Popover.Button>
 
-                  <Popover.Panel className="absolute top-16 z-10 w-44 bg-white text-primary rounded shadow-lg">
+                  <Popover.Panel className="absolute top-16 right-0 z-10 w-44 bg-white text-primary rounded shadow-lg">
                     <div className="flex flex-col my-5 w-full">
                       <div className="mx-auto px-5 py-2 font-Lobster text-lg">
                         Hi

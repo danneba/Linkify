@@ -3,6 +3,13 @@ import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { ApolloLink, from } from "apollo-link";
 
+import { store } from "../store/store";
+
+const state = store.getState();
+
+const isLoggedIn = state.user.isLoggedIn;
+const token = state.user.token;
+
 const cache = new InMemoryCache({
   addTypename: false,
 });
@@ -31,10 +38,11 @@ const default_auth_link = new ApolloLink((operation, forward) => {
     ...headers,
   };
 
-  // if (userStore.isLoggedIn) {
-  if (false) {
-    // h.authorization = `Bearer ${userStore.custom_access_token}`;
-    h.authorization = `Bearer aakshdakjshddjasljhsadasdnj`;
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    h.authorization = `Bearer ${token}`;
+    // h.authorization = `Bearer aakshdakjshddjasljhsadasdnj`;
   }
 
   operation.setContext({

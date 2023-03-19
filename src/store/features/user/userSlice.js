@@ -14,6 +14,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     set: (state, { payload }) => {
+      console.log("The token from store is  ,", payload.token);
       console.log("The payload is ", payload);
       localStorage.setItem("token", payload.token);
       let val = payload.token.split(".")[1];
