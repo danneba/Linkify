@@ -10,7 +10,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 import { useSelector } from "react-redux";
 import categories from "../../queries/categories.js";
+
+
 import { popularEvents, upcomingEvents, allEvents } from "../../queries/Event";
+
 import { format, differenceInDays } from "date-fns";
 
 import { NavLink, Link } from "react-router-dom";
@@ -18,6 +21,10 @@ import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
 
 function home() {
   const [limit, setLimit] = useState(2);
+  const [searchvalue, setSearch] = useState("");
+  const [searchterm, setterm] = useState("");
+  const [checki, setCheck] = useState("default");
+
   const {
     loading: getCategoriesLoading,
     error: getCategoriesError,
@@ -30,14 +37,31 @@ function home() {
   } = useQuery(upcomingEvents, {
     variables: { limit: 8 },
   });
-
+ 
   const {
     loading: getAllEventLoading,
     error: getAllEventError,
     data: getAllEventDone,
   } = useQuery(allEvents, {
-    variables: { limit: 16 },
+    variables: { limit: 16, where:{name:{"_ilike":`%${searchterm}%`}} },
   });
+  useEffect(() => {
+    setterm(searchvalue);
+
+  }, [searchvalue]);
+
+  useEffect(() => {
+    if(searchvalue != ""){
+      setCheck("searching");
+    }
+    else{
+      setCheck("default");
+
+    }
+    console.log( "The use effect is called" , checki);
+    
+
+  }, [searchvalue]);
 
   const {
     loading: getPopularEventLoading,
@@ -46,9 +70,7 @@ function home() {
   } = useQuery(popularEvents, {
     variables: { limit: 2 },
   });
-  if (getPopularEventDone) {
-    console.log("The events are ", getPopularEventDone);
-  }
+
 
   if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
 
@@ -67,6 +89,12 @@ function home() {
               </div>
               <div className="relative w-[40%] flex justify-center items-center">
                 <input
+                 onChange={(e)=>{
+                  console.log("asd")
+                  setSearch(
+                  e.target.value,
+                  
+                 )}}
                   type="text"
                   className="flex w-full h-16 justify-center   items-center rounded px-5 outline-none"
                   placeholder="Search for events all around"
@@ -84,6 +112,8 @@ function home() {
           </div>
         </div>
       </div>
+      {checki == "default" ? (
+
       <div className="flex flex-col px-5 w-[75%]  gap-y-5 mt-10 ">
         <div className="flex items-center gap-x-8 w-full h-20">
           <div className="flex  rounded-3xl items-center cursor-pointer justify-center h-12 px-10 min-w-min bg-gray-300">
@@ -155,6 +185,9 @@ function home() {
           </div>
         )}
       </div>
+      ) :(<div></div>)}
+
+{checki == "default" ? (
       <div className="flex flex-col px-5 w-[75%] h-full mt-5">
         <div className="text-left mb-5">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">
@@ -196,6 +229,8 @@ function home() {
           </div>
         )}
       </div>
+       ) :(<div></div>)}
+       {checki == "default" ? (
       <div className="flex flex-col px-5 w-[75%] h-full mt-10">
         <div className="text-left mb-5">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">New</p>
@@ -209,7 +244,7 @@ function home() {
           <div className="flex rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
           <div className="flex rounded w-[100%] h-80 bg-main-pic bg-no-repeat bg-cover bg-top"></div>
         </div>
-      </div>
+      </div> ) :(<div></div>)}
       <div className="flex flex-col px-5 w-[75%] mt-10">
         <div className="text-left mb-5">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">

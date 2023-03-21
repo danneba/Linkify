@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { format, differenceInDays } from "date-fns";
 import { allEvents } from "../../queries/Event";
 import categories from "../../queries/categories.js";
@@ -8,14 +9,18 @@ import { UilStar, UilArrowDown, UilSpinner } from "@iconscout/react-unicons";
 import { NavLink, Link } from "react-router-dom";
 
 function Venues() {
+  const [searchvalue, setsearch] = useState("");
+  const [searchterm, setterm] = useState("");
   const {
     loading: getAllEventLoading,
     error: getAllEventError,
     data: getAllEventDone,
   } = useQuery(allEvents, {
-    variables: { limit: 16 },
+    variables: { limit: 16, where:{name:{"_ilike":`%${searchterm}%`}} },
   });
-
+  useEffect(()=>{
+    setterm(searchvalue);
+  }, [searchvalue])
   const {
     loading: getCategoriesLoading,
     error: getCategoriesError,
@@ -33,6 +38,9 @@ function Venues() {
       <div className="w-full flex justify-center items-center flex-col">
         <div className="relative w-[40%] flex justify-center items-center">
           <input
+            onChange ={(e)=>{
+              setsearch(e.target.value)
+            }}
             type="text"
             className="flex w-full h-16 justify-center   items-center rounded px-5 outline-none"
             placeholder="Search for events all around"
