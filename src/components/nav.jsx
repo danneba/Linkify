@@ -32,6 +32,8 @@ function Nav({ theme }) {
             <ul className="flex gap-8 mt-2 pr-4 ">
               <NavLink to={"/home"}>Home</NavLink>
               <NavLink to={"/venues"}>Venues</NavLink>
+              <NavLink to={"/contact"}>Contact</NavLink>
+
               <NavLink to={"/venues/:venueId"} className="w-max">
                 About us
               </NavLink>
