@@ -3,6 +3,7 @@ import Signup from "./pages/signup";
 import HostSignUp from "./pages/HostSignUp";
 import AddEvent from "./pages/home/AddEvent";
 import Venues from "./pages/home/Venues";
+import Contact from "./pages/home/Contact_Us";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -35,6 +36,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path=":venueId" element={<Detail />} />
             <Route path="/venues" element={<Venues />} />
+            <Route path="/contact" element={<Contact />} />
+
             <Route path="/add-event" element={<AddEvent />} />
 
             <Route path="/register" element={<CreateEvent />} />
