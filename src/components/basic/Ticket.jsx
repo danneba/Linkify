@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -32,9 +32,8 @@ function Ticket() {
     email: "example@gmail.com",
     number: 0,
     price: 0,
-    total_price: 200,
   });
-
+  const [totalPrice, setTotalPrice] = useState(1);
   // let formData = {
   //   total_price: form.price,
   //   email: "example@gmail.com",
@@ -48,6 +47,15 @@ function Ticket() {
       position: toast.POSITION.TOP_RIGHT,
     });
   }
+
+  useEffect(() => {
+    setTotalPrice((prev) => prev * formData.price);
+  }, [formData.price]);
+
+  useEffect(() => {
+    setTotalPrice((prev) => prev * formData.number);
+  }, [formData.number]);
+
   function handleSubmit(e) {
     e.preventDefault();
     const { first_name, last_name, ticket_type, type, number } = formData;
@@ -56,31 +64,28 @@ function Ticket() {
     //   variables: { first_name, last_name, ticket_type, type, number },
     // });
 
-    setForm({
-      ...formData,
-      total_price: formData.price * formData.number,
-    });
-    console.log("Submit ---> ", formData);
-    fetch("https://linkify-backend.onrender.com/getTicket", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("NOT HERE");
-        if (res.errors) {
-          console.log(res.errors);
-          alert("Something went wrong");
-        } else {
-          console.log(res.data.checkout_url);
-          if (res.status === "success") {
-            window.location.href = res.data.checkout_url;
-          }
-        }
-      });
+    console.log("Submit ---> ", formData, " ======> ", totalPrice);
+
+    // fetch("https://linkify-backend.onrender.com/getTicket", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     console.log("NOT HERE");
+    //     if (res.errors) {
+    //       console.log(res.errors);
+    //       alert("Something went wrong");
+    //     } else {
+    //       console.log(res.data.checkout_url);
+    //       if (res.status === "success") {
+    //         window.location.href = res.data.checkout_url;
+    //       }
+    //     }
+    //   });
   }
 
   return (
