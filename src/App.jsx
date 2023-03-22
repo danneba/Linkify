@@ -3,7 +3,7 @@ import Signup from "./pages/signup";
 import HostSignUp from "./pages/HostSignUp";
 import AddEvent from "./pages/home/AddEvent";
 import Venues from "./pages/home/Venues";
-import Contact from "./pages/home/Contact_Us";
+import Contact from "./pages/home/ContactUs";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
