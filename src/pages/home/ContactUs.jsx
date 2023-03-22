@@ -21,14 +21,15 @@ import {
 } from "@iconscout/react-unicons";
 function Contact() {
   return (
-    <div className="flex w-full">
+    <div className="flex flex-col w-full">
       <div className="flex justify-center w-full items-center">
         <h1 className="text-2xl font-semibold ">Contact us</h1>
         <p className="text-sm font-normal">
           Have any questions? We would love to hear from you.
         </p>
       </div>
-      <div className="flex flex-col gap-4 bg-gray-400 shadow-xl rounded-lg">
+      <div className="flex justify-center gap-4">
+      <div className="flex flex-col gap-4 bg-gray-400 shadow-xl px-8 py-8 rounded-lg">
         <h1 className="text-2xl font-medium">Contact Information</h1>
         <p>Fill out the form and our team will get back to you soon</p>
         <div className="flex flex-col ">
@@ -125,6 +126,7 @@ function Contact() {
         <div className="flex w-full">
           <button className="flex bg-mainRed text-white">Submit</button>
         </div>
+      </div>
       </div>
     </div>
   );
