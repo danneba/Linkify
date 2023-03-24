@@ -14,6 +14,7 @@ module.exports = {
         "event-pic": "url('./assets/events.jpg')",
         "wendy-pic": "url('./assets/wendy.jpg')",
         "main-pic": "url('./assets/main.jpg')",
+        "photo-pic": "url('./assets/photo.jpg')",
       },
       colors: {
         primary: "#001235",
