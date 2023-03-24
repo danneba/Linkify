@@ -8,7 +8,7 @@ import AsyncSelect from "react-select/async";
 import Async, { useAsync } from "react-select/async";
 import { UilSpinner, UilAngleRight } from "@iconscout/react-unicons";
 import { AddEvent } from "../../queries/Event";
-
+import photoMain from "../../assets/photo.jpg";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {
@@ -36,8 +36,8 @@ function Contact() {
           </h1>
           <p>Fill out the form and our team will get back to you soon</p>
           <div className="flex flex-col gap-y-4 ">
-            <div className="bg-photo-pic "></div>
-
+            {/* <div className="bg-photo-pic w-32 bg-mainRed"></div> */}
+           <img src={photoMain} className="flex w-full px-0" alt="contact"/>
             <span className="flex gap-4">
               <UilHeadphones className="text-mainRed" />
               <p className="text-xl">+2519000000</p>
