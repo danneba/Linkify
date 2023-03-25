@@ -41,12 +41,12 @@ function Contact() {
     <div className="flex flex-col">
        <div className="flex relative  bg-contact gap-24 py-2 h-[700px] justify-center "> 
            {/* <img src={curves} className="w-full h-96 "/> */}
-           <div className="flex w-24 h-24 rounded-full mt-96  mr-24 ">
-           <img src={habesha} className="flex rounded-full shadow-sm border-2 w-24"/>
+           <div className="flex w-20 h-20 rounded-full mt-96  mr-24 ">
+           <img src={habesha} className="flex rounded-full shadow-sm border-2 w-20"/>
              
            </div>
-           <div className="flex w-12 h-12 rounded-full mt-96 mr-24 ">
-           <img src={message} className="flex rounded-full shadow-sm border-2 w-12"/>
+           <div className="flex w-16 h-16 rounded-full mt-64 mr-24 ">
+           <img src={message} className="flex rounded-full shadow-sm border-2 w-20"/>
              
            </div>
            <div className="flex flex-col gap-4 justify-center items-center">
@@ -61,7 +61,7 @@ function Contact() {
            <img src={phone} className="flex rounded-full shadow-sm border-2 w-20"/>
              
            </div>
-           <div className="flex w-24 h-24  absolute -bottom-12 rounded-full mr-24 ">
+           <div className="flex w-24 h-24  absolute -bottom-12  rounded-full  ">
            <img src={two} className="flex rounded-full shadow-sm border-2 border-[#ffafcc] w-24"/>
              
            </div>
