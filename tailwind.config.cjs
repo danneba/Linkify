@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         primary: "#001235",
         mainRed: "#EA4C89",
+        contact:"#FA6F22",
         lightBG: "#D6E4E5",
         "darkBG-2": "#01407A",
         "orange-2": "#EA5933",
