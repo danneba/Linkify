@@ -20,6 +20,8 @@ module.exports = {
         primary: "#001235",
         mainRed: "#EA4C89",
         contact:"#FA6F22",
+        about:"#322C5A",
+        pretify:"#03363D",
         lightBG: "#D6E4E5",
         "darkBG-2": "#01407A",
         "orange-2": "#EA5933",

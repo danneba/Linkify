@@ -4,6 +4,8 @@ import HostSignUp from "./pages/HostSignUp";
 import AddEvent from "./pages/home/AddEvent";
 import Venues from "./pages/home/Venues";
 import Contact from "./pages/home/ContactUs";
+import About from "./pages/home/AboutUs";
+
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -37,6 +39,8 @@ function App() {
             <Route path=":venueId" element={<Detail />} />
             <Route path="/venues" element={<Venues />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+
 
             <Route path="/add-event" element={<AddEvent />} />
 
