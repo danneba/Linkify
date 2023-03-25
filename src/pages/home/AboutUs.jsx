@@ -1,30 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { TiTick } from "react-icons/ti";
-import Select from "react-select";
-import { useQuery, useMutation, gql } from "@apollo/client";
-import category from "../../queries/category.js";
-import { insertTicket } from "../../queries/Ticket";
-import AsyncSelect from "react-select/async";
-import Async, { useAsync } from "react-select/async";
-import { UilSpinner, UilAngleRight } from "@iconscout/react-unicons";
-import { AddEvent } from "../../queries/Event";
-import photoMain from "../../assets/photo.jpg";
-import curves from "../../assets/splitNegative.svg";
-import heart from "../../assets/download.png";
-import address from "../../assets/friend.jpg";
 
-import phone from "../../assets/phone.avif";
-import event from "../../assets/event.avif";
 
 import eph from "../../assets/eph.jpg";
 import dan from "../../assets/dan.jpg";
 import html from "../../assets/html.png";
 
-import two from "../../assets/two.jpg";
 
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import {
   UilUser,
   UilSignOutAlt,
@@ -51,12 +34,13 @@ function About() {
           <p className="text-white font-semibold text-6xl mb-12">
             Your trusted event ticketing partner
           </p>
-          <div className="flex absolute -bottom-1/4">
+          {/* <div className="flex absolute -bottom-1/4">
             <img src={event} className="flex h-96 rounded-lg w-[1000px]" />
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="flex mt-52 justify-center items-center">
+      <div className="flex flex-col mt-16 gap-8 justify-center items-center">
+          <p className="flex text-pretify font-semibold text-7xl ">Our Mission</p>
         <p className="flex text-pretify font-semibold text-4xl w-[60%] text-center">
           Our mission is to provide a seamless and convenient ticketing
           experience for all of our users.
@@ -107,7 +91,7 @@ function About() {
         </div>
         <div className="flex justify-center items-center mt-16">
           <p className="flex text-pretify font-semibold text-4xl w-[60%] text-center whitespace-nowrap">
-            The team
+            The Team
           </p>
         </div>
         <div className="flex justify-between gap-x-44 mt-8">
@@ -122,7 +106,7 @@ function About() {
             <img src={html} className="w-8 absolute top-1 right-3" />
           </div>
           <div className="flex flex-col relative shadow-sm hover:shadow-xl py-6 border px-6 items-center justify-center">
-            <img src={eph} className="rounded-full w-44 h-44" />
+            <img src={eph} className="rounded-full w-44 h-44 mb-6" />
             <p className="flex ml-6 mt-4 text-2xl font-semibold">Ephrem Demlew</p>
             <p className="flex ml-10  text-pretify text-lg">Co-founder</p>
             <p className="w-64 text-center">
