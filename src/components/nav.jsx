@@ -29,7 +29,7 @@ function Nav({ theme }) {
 
         <div className="flex justify-between items-center gap-x-12 mr-4">
           <div className="">
-            <ul className="flex gap-8 mt-2 pr-4 ">
+            <ul className="flex gap-8 mt-2 pr-4 text-gray-300">
               <NavLink to={"/home"}>Home</NavLink>
               <NavLink to={"/venues"}>Venues</NavLink>
               <NavLink to={"/contact"}>Contact</NavLink>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -23,16 +23,16 @@ function Ticket() {
     { value: "vvip", label: "VVIP" },
     { value: "general_admission", label: "General Admission" },
   ];
-
+  const [price, setPrice] = useState({
+    ticketCount: 1,
+    total_price: 1,
+  });
   const [formData, setForm] = useState({
     first_name: "",
     last_name: "",
     ticket_type: "",
     type: "",
     email: "example@gmail.com",
-    number: 0,
-    price: 0,
-    total_price: 200,
   });
 
   // let formData = {
@@ -48,6 +48,13 @@ function Ticket() {
       position: toast.POSITION.TOP_RIGHT,
     });
   }
+
+  useEffect(() => {
+    setForm({
+      ...formData,
+      total_price: formData.price * formData.total_price,
+    });
+  }, [formData.number]);
   function handleSubmit(e) {
     e.preventDefault();
     const { first_name, last_name, ticket_type, type, number } = formData;
@@ -56,10 +63,6 @@ function Ticket() {
     //   variables: { first_name, last_name, ticket_type, type, number },
     // });
 
-    setForm({
-      ...formData,
-      total_price: formData.price * formData.number,
-    });
     console.log("Submit ---> ", formData);
     fetch("https://linkify-backend.onrender.com/getTicket", {
       method: "POST",
@@ -156,7 +159,7 @@ function Ticket() {
             onChange={(e) => {
               setForm({
                 ...formData,
-                price: e.target.value,
+                total_price: e.target.value,
               });
             }}
             className="h-12 w-[447px] px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"

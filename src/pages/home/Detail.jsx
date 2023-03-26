@@ -34,7 +34,10 @@ function Detail() {
     error: getSimilarEventError,
     data: getSimilarEventDone,
   } = useQuery(allEvents, {
-    variables: { limit: 3, where: { category: { _eq: category } } },
+    variables: {
+      limit: 3,
+      where: { _and: { category: { _eq: category }, id: { _neq: id } } },
+    },
   });
 
   const [addWishList, { loading, error: loginError, data: addWishLostDone }] =
