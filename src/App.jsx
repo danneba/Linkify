@@ -39,6 +39,8 @@ function App() {
             <Route path=":venueId" element={<Detail />} />
             <Route path="/venues" element={<Venues />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+
             <Route element={<ProtectedRoute />}>
               <Route path="/add-event" element={<AddEvent />} />
               <Route path="/venue/get-ticket" element={<Ticket />} />
