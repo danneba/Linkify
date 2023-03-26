@@ -12,6 +12,10 @@ import { format, differenceInDays } from "date-fns";
 import { UilSpinner } from "@iconscout/react-unicons";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import * as ELG from "esri-leaflet-geocoder";
+import { NavLink, Link } from "react-router-dom";
 
 function Detail() {
   const isHost = useSelector((store) => store.user.isHost);
@@ -44,9 +48,7 @@ function Detail() {
     useMutation(addWishlist, { "x-hasura-role": "host" });
 
   const navigate = useNavigate();
-  function goToCheckout() {
-    navigate("/venue/get-ticket");
-  }
+
   if (addWishLostDone) {
     console.log("hghfcg");
     toast.success("Sucessfully added to wish list.", {
@@ -58,6 +60,22 @@ function Detail() {
       position: toast.POSITION.TOP_RIGHT,
     });
   }
+
+  function Geocoder({ address }) {
+    const map = useMap();
+
+    ELG.geocode()
+      .text(address)
+      .run((err, results, response) => {
+        console.log(results.results[0].latlng);
+        const { lat, lng } = results.results[0].latlng;
+        map.setView([lat, lng], 12);
+      });
+
+    return null;
+  }
+  const position = [8.980603, 38.757759];
+
   return (
     <div className=" h-full flex w-[70%] mx-auto m-5  ">
       {getSingleEventLoading ? (
@@ -100,57 +118,29 @@ function Detail() {
               backgroundImage: `url('${getSingleEventDone?.items?.image}')`,
             }}
           ></div>
+
           <div className="flex flex-col w-full gap-12">
             {getSingleEventDone?.items?.description}
-            {/* <p className="w-[85%]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-              massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-              fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
-              vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum
-              auctor ornare leo, non suscipit magna interdum eu. Curabitur
-              pellentesque nibh nibh, at maximus ante fermentum sit amet.
-              Pellentesque commodo lacus at sodales sodales. Quisque sagittis
-              orci ut diam condimentum, vel euismod erat placerat. Lorem ipsum
-              dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
-              Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-              mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
-              tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo,
-              non suscipit magna interdum eu. Curabitur pellentesque nibh nibh,
-              at maximus ante fermentum sit amet. Pellentesque commodo lacus at
-              sodales sodales. Quisque sagittis orci ut diam condimentum, vel
-              euismod erat placerat. Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
-              Pellentesque sit amet sapien fringilla, mattis ligula consectetur,
-              ultrices mauris. Maecenas vitae mattis tellus. Nullam quis
-              imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna
-              interdum eu. Curabitur pellentesque nibh nibh, at maximus ante
-              fermentum sit amet. Pellentesque commodo lacus at sodales sodales.
-              Quisque sagittis orci ut diam condimentum, vel euismod erat
-              placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-              sapien fringilla, mattis ligula consectetur, ultrices mauris.
-              Maecenas vitae mattis tellus. Nullam quis imperdiet augue.
-              Vestibulum auctor ornare leo, non suscipit magna interdum eu.
-              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit
-              amet. Pellentesque commodo lacus at sodales sodales. Quisque
-              sagittis orci ut diam condimentum, vel euismod erat placerat.
-            </p>
-            <span className="text-2xl font-bold ">
-              Lorem lorem ue nibh nibh lorem ue nibh nibh
-            </span>
-            <ul className="flex flex-col list-disc gap-2 ml-8">
-              <li>vel euismod erat placerat</li>
-              <li>Curabitur pellentesque nibh nibh</li>
-              <li>Curabitur pellentesque nibh nibh</li>
-              <li>Curabitur pellentesque nibh nibh</li>
-              <li>Curabitur pellentesque nibh nibh</li>
-            </ul> */}
+
             <div className="flex w-full flex-col gap-4">
               <p className="text-4xl ">Location</p>
               <p className="text-sm font-semibold">
                 {getSingleEventDone?.items?.location}
               </p>
-              <div className=" flex w-full bg-location-pic h-96 shadow-2xl"></div>
+              <div>
+                <MapContainer
+                  className="map"
+                  center={position}
+                  zoom={6}
+                  style={{ height: 500, width: "100%" }}
+                >
+                  <TileLayer
+                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <Geocoder address="New York" />
+                </MapContainer>
+              </div>
             </div>
           </div>
           <div className="flex flex-col w-full mt-12 gap-8 bg-gray-200 rounded-md pt-20 px-20 shadow-xl pb-40">
@@ -217,12 +207,12 @@ function Detail() {
       <div className="flex flex-col gap-4 mt-28 ">
         {!isHost && isLoggedIn && (
           <div className="flex flex-col gap-y-5">
-            <button
-              onClick={goToCheckout}
+            <Link
+              to={`/venue/get-ticket?id=${id}`}
               className="flex w-52 h-16  justify-center items-center text-white bg-[#EF5DA8] rounded hover:bg-opacity-90"
             >
               Get Tickets
-            </button>
+            </Link>
             <button
               onClick={() =>
                 addWishList({

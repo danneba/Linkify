@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "apollo-link": "^1.2.14",
     "date-fns": "^2.29.3",
+    "esri-leaflet-geocoder": "^2.3.3",
     "graphql": "^16.6.0",
     "leaflet": "^1.9.3",
     "leaflet-defaulticon-compatibility": "^0.1.1",

@@ -11,7 +11,6 @@ import { useQuery, gql } from "@apollo/client";
 import { useSelector } from "react-redux";
 import categories from "../../queries/categories.js";
 
-
 import { popularEvents, upcomingEvents, allEvents } from "../../queries/Event";
 
 import { format, differenceInDays } from "date-fns";
@@ -37,30 +36,25 @@ function home() {
   } = useQuery(upcomingEvents, {
     variables: { limit: 8 },
   });
- 
+
   const {
     loading: getAllEventLoading,
     error: getAllEventError,
     data: getAllEventDone,
   } = useQuery(allEvents, {
-    variables: { limit: 16, where:{name:{"_ilike":`%${searchterm}%`}} },
+    variables: { limit: 16, where: { name: { _ilike: `%${searchterm}%` } } },
   });
   useEffect(() => {
     setterm(searchvalue);
-
   }, [searchvalue]);
 
   useEffect(() => {
-    if(searchvalue != ""){
+    if (searchvalue != "") {
       setCheck("searching");
-    }
-    else{
+    } else {
       setCheck("default");
-
     }
-    console.log( "The use effect is called" , checki);
-    
-
+    console.log("The use effect is called", checki);
   }, [searchvalue]);
 
   const {
@@ -70,7 +64,6 @@ function home() {
   } = useQuery(popularEvents, {
     variables: { limit: 2 },
   });
-
 
   if (getCategoriesDone?.items.length === 0) return <div>Empty</div>;
 
@@ -89,12 +82,10 @@ function home() {
               </div>
               <div className="relative w-[40%] flex justify-center items-center">
                 <input
-                 onChange={(e)=>{
-                  console.log("asd")
-                  setSearch(
-                  e.target.value,
-                  
-                 )}}
+                  onChange={(e) => {
+                    console.log("asd");
+                    setSearch(e.target.value);
+                  }}
                   type="text"
                   className="flex w-full h-16 justify-center   items-center rounded px-5 outline-none"
                   placeholder="Search for events all around"
@@ -113,138 +104,144 @@ function home() {
         </div>
       </div>
       {checki == "default" ? (
-
-      <div className="flex flex-col px-5 w-[75%]  gap-y-5 mt-10 ">
-        <div className="flex items-center gap-x-8 w-full h-20">
-          <div className="flex  rounded-3xl items-center cursor-pointer justify-center h-12 px-10 min-w-min bg-gray-300">
-            All
+        <div className="flex flex-col px-5 w-[75%]  gap-y-5 mt-10 ">
+          <div className="flex items-center gap-x-8 w-full h-20">
+            <div className="flex  rounded-3xl items-center cursor-pointer justify-center h-12 px-10 min-w-min bg-gray-300">
+              All
+            </div>
+            {getCategoriesLoading ? (
+              <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+                <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
+                {getCategoriesDone?.items.map((val) => (
+                  <div
+                    className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
+                    key={val.value}
+                  >
+                    {val.label}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          {getCategoriesLoading ? (
-            <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
-              <div className="flex rounded-3xl bg-gray-300 animate-pulse cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90 w-32"></div>
+          <div className="text-left mt-10">
+            <p className=" text-2xl font-bold font-Lobster text-mainRed">
+              Trending
+            </p>
+            <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
+          </div>
+          {getPopularEventLoading ? (
+            <div className="grid grid-cols-2 w-full gap-x-5 h-96">
+              <div className="flex flex-col">
+                <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
+              </div>
             </div>
           ) : (
-            <div className="flex items-center gap-x-8 w-full scrollbar-hide overflow-auto h-20">
-              {getCategoriesDone?.items.map((val) => (
-                <div
-                  className="flex rounded-3xl bg-mainRed cursor-pointer items-center justify-center h-12 px-10 min-w-max text-white hover:bg-opacity-90"
-                  key={val.value}
-                >
-                  {val.label}
+            <div className="grid grid-cols-2 w-full gap-x-5">
+              {getPopularEventDone.items.map((val) => (
+                <div className="flex flex-col" key={val.id}>
+                  {/* <div style={`background-image: url('${val.image}')`}></div> */}
+
+                  <div
+                    className="bg-cover group cursor-pointer bg-center shadow-xl h-96 rounded flex justify-center items-end"
+                    style={{
+                      backgroundImage: `url('${val.image}')`,
+                    }}
+                  >
+                    <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
+                      <span className="text-white absolute bottom-10">
+                        {val.name}
+                      </span>
+                    </span>
+                  </div>
                 </div>
               ))}
-            </div>
-          )}
-        </div>
-        <div className="text-left mt-10">
-          <p className=" text-2xl font-bold font-Lobster text-mainRed">
-            Trending
-          </p>
-          <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
-        </div>
-        {getPopularEventLoading ? (
-          <div className="grid grid-cols-2 w-full gap-x-5 h-96">
-            <div className="flex flex-col">
-              <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
-            </div>
-            <div className="flex flex-col">
-              <div className="flex h-full shadow-lg animate-pulse rounded bg-gray-300"></div>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 w-full gap-x-5">
-            {getPopularEventDone.items.map((val) => (
-              <div className="flex flex-col" key={val.id}>
-                {/* <div style={`background-image: url('${val.image}')`}></div> */}
-
-                <div
-                  className="bg-cover group cursor-pointer bg-center shadow-xl h-96 rounded flex justify-center items-end"
-                  style={{
-                    backgroundImage: `url('${val.image}')`,
-                  }}
-                >
-                  <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
-                    <span className="text-white absolute bottom-10">
-                      {val.name}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            ))}
-            {/* <div className="flex flex-col">
+              {/* <div className="flex flex-col">
               <div className="flex h-full shadow-lg bg-main-pic bg-cover bg-center rounded bg-red-200"></div>
             </div>
             <div className="flex flex-col">
               <div className="flex w-full h-96 shadow-lg bg-tren-pic bg-no-repeat bg-start bg-left rounded"></div>
             </div> */}
-          </div>
-        )}
-      </div>
-      ) :(<div></div>)}
-
-{checki == "default" ? (
-      <div className="flex flex-col px-5 w-[75%] h-full mt-5">
-        <div className="text-left mb-5">
-          <p className=" text-2xl font-bold font-Lobster text-mainRed">
-            Upcoming
-          </p>
-          <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
+            </div>
+          )}
         </div>
-        {getUpcomingEventLoading ? (
-          <div className="grid grid-cols-4 w-full gap-5">
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-            <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-4 w-full gap-5">
-            {getUpcomingEventDone.items.map((val) => (
-              <div className="flex flex-col" key={val.id}>
-                {/* <div style={`background-image: url('${val.image}')`}></div> */}
+      ) : (
+        <div></div>
+      )}
 
-                <div
-                  className="bg-cover group cursor-pointer bg-center shadow-xl h-80 rounded flex justify-center items-end"
-                  style={{
-                    backgroundImage: `url('${val.image}')`,
-                  }}
-                >
-                  <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
-                    <span className="text-white absolute bottom-10">
-                      {val.name}
+      {checki == "default" ? (
+        <div className="flex flex-col px-5 w-[75%] h-full mt-5">
+          <div className="text-left mb-5">
+            <p className=" text-2xl font-bold font-Lobster text-mainRed">
+              Upcoming
+            </p>
+            <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
+          </div>
+          {getUpcomingEventLoading ? (
+            <div className="grid grid-cols-4 w-full gap-5">
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+              <div className="flex shadow-lg rounded w-[100%] h-80 animate-pulse bg-gray-300"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-4 w-full gap-5">
+              {getUpcomingEventDone.items.map((val) => (
+                <div className="flex flex-col" key={val.id}>
+                  {/* <div style={`background-image: url('${val.image}')`}></div> */}
+
+                  <div
+                    className="bg-cover group cursor-pointer bg-center shadow-xl h-80 rounded flex justify-center items-end"
+                    style={{
+                      backgroundImage: `url('${val.image}')`,
+                    }}
+                  >
+                    <span className="hidden gap-y-10 bg-gradient-to-b from-gray-200/0 to-gray-900/90 w-full h-[80%] group-hover:flex justify-center items-center bg-opacity-50 text-2xl font-bold relative">
+                      <span className="text-white absolute bottom-10">
+                        {val.name}
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div></div>
+      )}
+      {checki == "default" ? (
+        <div className="flex flex-col px-5 w-[75%] h-full mt-10">
+          <div className="text-left mb-5">
+            <p className=" text-2xl font-bold font-Lobster text-mainRed">New</p>
+            <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
           </div>
-        )}
-      </div>
-       ) :(<div></div>)}
-       {checki == "default" ? (
-      <div className="flex flex-col px-5 w-[75%] h-full mt-10">
-        <div className="text-left mb-5">
-          <p className=" text-2xl font-bold font-Lobster text-mainRed">New</p>
-          <span className="font-bold">lotem ipsum dloreads jkahdsn.</span>
+          <div className="grid grid-cols-4 w-full gap-5 overflow-x-auto">
+            <div className="flex col-span-2 rounded w-[100%]  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div>
+            <div className="flex rounded col-start-3 w-full  row-span-2  bg-main-pic bg-no-repeat bg-cover bg-top"></div>
+            <div className="flex rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
+            <div className="flex rounded w-[100%] h-80 bg-event-pic bg-no-repeat bg-cover bg-top"></div>
+            <div className="flex rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
+            <div className="flex rounded w-[100%] h-80 bg-main-pic bg-no-repeat bg-cover bg-top"></div>
+          </div>
         </div>
-        <div className="grid grid-cols-4 w-full gap-5 overflow-x-auto">
-          <div className="flex col-span-2 rounded w-[100%]  bg-wendy-pic bg-no-repeat bg-cover bg-center"></div>
-          <div className="flex rounded col-start-3 w-full  row-span-2  bg-main-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex rounded w-[100%] h-80 bg-event-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex rounded w-[100%] h-80 bg-wendy-pic bg-no-repeat bg-cover bg-top"></div>
-          <div className="flex rounded w-[100%] h-80 bg-main-pic bg-no-repeat bg-cover bg-top"></div>
-        </div>
-      </div> ) :(<div></div>)}
+      ) : (
+        <div></div>
+      )}
       <div className="flex flex-col px-5 w-[75%] mt-10">
         <div className="text-left mb-5">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">
@@ -316,7 +313,7 @@ function home() {
           <div className="grid grid-cols-4 w-full gap-10 gap-x-5 overflow-x-auto">
             {getAllEventDone.items.map((val) => (
               <Link
-                to={`/vacancy?id=${val.id}&cat=${val.category}`}
+                to={`/venue?id=${val.id}&cat=${val.category}`}
                 key={val.id}
                 className="cursor-pointer flex flex-col justify-center gap-y-5  h-[450px]"
               >

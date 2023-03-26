@@ -26,5 +26,21 @@ let insertTicket = gql`
     }
   }
 `;
+let getTicket = gql`
+  query getTicket($event_id: uuid!) {
+    ticket(where: { event_id: { _eq: $event_id } }) {
+      available_tickets
+      created_at
+      event_id
+      full_capacity
+      general_admission
+      host_id
+      id
+      updated_at
+      vip
+      vvip
+    }
+  }
+`;
 
-export { insertTicket };
+export { insertTicket, getTicket };

@@ -43,7 +43,7 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route path="/add-event" element={<AddEvent />} />
-              <Route path="/venue/get-ticket" element={<Ticket />} />
+              <Route path="/venue/:get-ticket" element={<Ticket />} />
             </Route>
           </Route>
           <Route path="*" element={<PageNotFound />} />
