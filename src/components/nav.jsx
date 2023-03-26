@@ -34,7 +34,7 @@ function Nav({ theme }) {
               <NavLink to={"/venues"}>Venues</NavLink>
               <NavLink to={"/contact"}>Contact</NavLink>
 
-              <NavLink to={"/venues/:venueId"} className="w-max">
+              <NavLink to={"/about"} className="w-max">
                 About us
               </NavLink>
             </ul>
