@@ -12,9 +12,11 @@ import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { unset } from "../store/features/user/userSlice";
 import { Popover } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 function Nav({ theme }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
   const Name = useSelector((store) => store.user.userName);
@@ -79,6 +81,7 @@ function Nav({ theme }) {
                       <button
                         onClick={() => {
                           dispatch(unset());
+                          navigate("/login");
                         }}
                         className="font-semibold bg-primary flex gap-x-3 text-white px-5 py-3 mt-3 hover:bg-opacity-80 w-full mx-auto  shadow-lg"
                       >

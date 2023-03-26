@@ -15,7 +15,8 @@ import { set, unset } from "../store/features/user/userSlice";
 import { useAuth0 } from "@auth0/auth0-react";
 import login from "../queries/login";
 import Host_Login from "../queries/hostLogin";
-
+import { useFormik } from "formik";
+import { basicSchema } from "../validation";
 function index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,6 +25,28 @@ function index() {
     password: "",
     isHost: false,
   });
+
+  const onSubmit = (values, actions) => {
+    console.log("Submitted ==> ", values, actions);
+    const { email, password } = values;
+    getUser({ variables: { email, password } });
+    actions.resetForm();
+  };
+
+  const { values, errors, handleBlur, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+        isHost: false,
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
+
+  console.log("The error is ", errors);
+
+  // console.log("The data is ", values);
 
   const [getUser, { loading, error: loginError, data }] = useMutation(
     formData.isHost ? Host_Login : login
@@ -49,45 +72,10 @@ function index() {
     console.log("loginError ", { ...loginError }, loginError.message);
   }
 
-  function handleSubmit(e) {
+  function handleSubmited(e) {
     e.preventDefault();
     const { email, password, isHost } = formData;
-
-    getUser({ variables: { email, password } });
   }
-  // const { loginWithRedirect, logout } = useAuth0();
-
-  // return (
-  //   <>
-  //     <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
-  //       <button
-  //         onClick={() =>
-  //           logout({ logoutParams: { returnTo: window.location.origin } })
-  //         }
-  //       >
-  //         Log Out
-  //       </button>
-  //       <br />
-  //       <button onClick={() => loginWithRedirect()}>Log In</button>
-  //     </div>
-  //   </>
-  // );
-
-  // return (
-  //   <>
-  //     <div className="w-screen flex flex-col justify-center items-center h-96 gap-5">
-  //       <button
-  //         onClick={() =>
-  //           logout({ logoutParams: { returnTo: window.location.origin } })
-  //         }
-  //       >
-  //         Log Out
-  //       </button>
-  //       <br />
-  //       <button onClick={() => loginWithRedirect()}>Log In</button>
-  //     </div>
-  //   </>
-  // );
 
   return (
     <div className="h-screen flex justify-center w-full">
@@ -108,6 +96,41 @@ function index() {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.email && touched.email
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.email && touched.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+              <label htmlFor="email" className="mt-2">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.password && touched.password
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.password && touched.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
+
+              {/* <label htmlFor="email">Email</label>
               <input
                 type="text"
                 onChange={(e) => {
@@ -132,7 +155,7 @@ function index() {
                 </p>
               ) : (
                 ""
-              )}
+              )} */}
               <div className="flex justify-between font-light">
                 <p>
                   <input type="checkbox" className="mr-2 cursor-pointer" />

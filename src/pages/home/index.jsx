@@ -54,7 +54,6 @@ function home() {
     } else {
       setCheck("default");
     }
-    console.log("The use effect is called", checki);
   }, [searchvalue]);
 
   const {
@@ -83,7 +82,6 @@ function home() {
               <div className="relative w-[40%] flex justify-center items-center">
                 <input
                   onChange={(e) => {
-                    console.log("asd");
                     setSearch(e.target.value);
                   }}
                   type="text"

@@ -11,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { signupSchema } from "../validation";
+import { set, unset } from "../store/features/user/userSlice";
 
 const ADD_USER = gql`
   mutation (
@@ -40,10 +43,31 @@ function signup() {
     email: "",
     password: "",
   });
+  const onSubmit = (values, actions) => {
+    console.log("Submitted ==> ", values, actions);
+    const { email, first_name, last_name, password } = values;
+    addUser({ variables: { email, first_name, last_name, password } });
+    actions.resetForm();
+  };
+
+  const { values, errors, handleBlur, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: signupSchema,
+      onSubmit,
+    });
+
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
   if (data) {
-    dispatch(set(JSON.stringify(data.sign_up.token)));
+    console.log("The dispatcher is ", dispatch);
+    dispatch(set({ token: data.sign_up.token, isHost: false }));
 
     // localStorage.setItem("token", JSON.stringify(data.sign_up.token));
     toast.success("Successfully registered !", {
@@ -68,7 +92,7 @@ function signup() {
     return;
   }
 
-  function handleSubmit(e) {
+  function handleSubmite(e) {
     e.preventDefault();
     const { email, first_name, last_name, password } = formData;
     addUser({ variables: { email, first_name, last_name, password } });
@@ -94,6 +118,93 @@ function signup() {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-y-2">
               <label htmlFor="first_name">First Name</label>
+              <input
+                type="text"
+                id="first_name"
+                value={values.first_name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.first_name && touched.first_name
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.first_name && touched.first_name && (
+                <p className="text-red-500 text-sm">{errors.first_name}</p>
+              )}
+              <label htmlFor="last_name" className="mt-2">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                value={values.last_name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.last_name && touched.last_name
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.last_name && touched.last_name && (
+                <p className="text-red-500 text-sm">{errors.last_name}</p>
+              )}
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.email && touched.email
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.email && touched.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+              <label htmlFor="password" className="mt-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.password && touched.password
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.password && touched.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
+              <label htmlFor="confirmPassword" className="mt-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
+              />
+              {errors.confirmPassword && touched.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
+
+              {/* <label htmlFor="first_name">First Name</label>
               <input
                 type="text"
                 id="first_name"
@@ -147,12 +258,12 @@ function signup() {
               />
               <label htmlFor="email" className="mt-2">
                 Confirm Password
-              </label>
-              <input
+              </label> */}
+              {/* <input
                 type="password"
                 id="confirm_password"
                 className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-              />
+              /> */}
               {loading ? (
                 <button
                   disabled

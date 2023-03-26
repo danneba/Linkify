@@ -17,6 +17,7 @@
     "apollo-link": "^1.2.14",
     "date-fns": "^2.29.3",
     "esri-leaflet-geocoder": "^2.3.3",
+    "formik": "^2.2.9",
     "graphql": "^16.6.0",
     "leaflet": "^1.9.3",
     "leaflet-defaulticon-compatibility": "^0.1.1",
@@ -30,7 +31,8 @@
     "react-select": "^5.7.0",
     "react-toastify": "^9.1.1",
     "redux-persist": "^6.0.0",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { set, unset } from "../store/features/user/userSlice";
 
 const ADD_USER = gql`
   mutation (
@@ -56,7 +57,7 @@ function HostSignUp() {
     });
   }
   if (data) {
-    dispatch(set(JSON.stringify(data.hostSignup.token)));
+    dispatch(set({ token: data.hostSignup.token, isHost: true }));
 
     // localStorage.setItem("token", JSON.stringify(data.hostSignup.token));
     toast.success("Successfully registered !", {

@@ -92,7 +92,6 @@ const Stepper = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("first ", currentStep);
     const {
       name,
       image,
@@ -121,7 +120,6 @@ const Stepper = () => {
     }
     if (currentStep == 2) {
       if (onEventAdded?.insert_events?.returning[0]?.id) {
-        console.log("The id to be sent is ----->", event_id);
         addTicket({
           variables: {
             available_tickets: pricing.available_tickets,
@@ -137,7 +135,6 @@ const Stepper = () => {
     }
 
     if (onTicketAdded?.insert_ticket?.returning[0]?.id) {
-      console.log("Navigate is called now");
       navigate("/home");
     }
   }
@@ -161,10 +158,7 @@ const Stepper = () => {
       toast.success("Successfully added your events!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-    console.log(
-      "The event id to be set is ",
-      onEventAdded?.insert_events?.returning[0]?.id
-    );
+
     setEventId(onEventAdded?.insert_events[0]?.id);
   }, [onEventAdded]);
   useEffect(() => {
@@ -313,10 +307,6 @@ const Stepper = () => {
                       className="ml-3"
                       onChange={(e) => {
                         setPricing({ ...pricing, free: e.target.value });
-                        console.log(
-                          "The check box selected is ",
-                          e.target.value
-                        );
                       }}
                     />
                   </label>
@@ -386,7 +376,6 @@ const Stepper = () => {
                     className="basic-multi-select"
                     classNamePrefix="select"
                     onChange={(value, action) => {
-                      console.log("The Category is is ", value.value);
                       setFormData({ ...formData, category: value.value });
                     }}
                   />

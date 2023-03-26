@@ -5,13 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, gql } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 
 import { getTicket } from "../../queries/Ticket";
 
 function Ticket() {
+  const navigate = useNavigate();
+
   const { search } = useLocation();
   const id = new URLSearchParams(search).get("id");
 
+  const free_ticket_type = [{ value: "free", label: "Free" }];
   const ticket_type = [
     { value: "free", label: "Free" },
     { value: "vip", label: "VIP" },
@@ -42,77 +46,64 @@ function Ticket() {
 
   useEffect(() => {
     if (getTicketEventDone) {
+      console.log("The data is ", getTicketEventDone);
       setTicketData({ ...ticketData, ticket: getTicketEventDone.ticket[0] });
+    } else {
+      setTicketData({ ...ticketData, ticket: 0 });
     }
   }, [getTicketEventDone]);
 
   useEffect(() => {
-    setForm({
-      ...formData,
-      total_price:
-        parseInt(formData.ticketNumber) *
-        ticketData.ticket[ticketData?.selected],
-    });
+    console.log("ticketData ", ticketData);
+    if (ticketData.ticket) {
+      setForm({
+        ...formData,
+        total_price:
+          parseInt(formData.ticketNumber) *
+          ticketData.ticket[ticketData?.selected],
+      });
+    } else {
+      setForm({
+        ...formData,
+        total_price: 0,
+      });
+    }
   }, [formData.ticketNumber]);
-  // useEffect(() => {
-  //   if (ticketData.selected) {
-  //     setForm({
-  //       ...formData,
-  //       total_price:
-  //         formData.ticketNumber * ticketData.ticket[ticketData?.selected],
-  //     });
-  //   }
-  // }, [ticketData.selected]);
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("The ticket is ", ticketData);
-    // console.log(
-    //   "THe first ",
-    //   formData.ticketNumber,
-    //   " === ",
-    //   ticketData.ticket[ticketData?.selected],
-    //   formData.ticketNumber * ticketData.ticket[ticketData?.selected]
-    // );
-    setForm({
-      ...formData,
-      total_price:
-        parseInt(formData.ticketNumber) *
-        ticketData.ticket[ticketData?.selected],
-    });
-    console.log(
-      "Submit ---> ",
-      parseInt(formData.ticketNumber) * ticketData.ticket[ticketData?.selected]
-    );
     let formValue = {
       first_name: formData.first_name,
       last_name: formData.last_name,
       email: formData.email,
-      total_price:
-        parseInt(formData.ticketNumber) *
-        ticketData.ticket[ticketData?.selected],
+      total_price: ticketData.ticket
+        ? parseInt(formData.ticketNumber) *
+          ticketData.ticket[ticketData?.selected]
+        : 0,
     };
-    console.log("The daata is ", formValue);
-    fetch("https://linkify-backend.onrender.com/getTicket", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formValue),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("NOT HERE");
-        if (res.errors) {
-          console.log(res.errors);
-          alert("Something went wrong");
-        } else {
-          console.log(res.data.checkout_url);
-          if (res.status === "success") {
-            window.location.href = res.data.checkout_url;
-          }
-        }
-      });
+    ticketData.ticket && ticketData?.selected !== "free"
+      ? fetch("https://linkify-backend.onrender.com/getTicket", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(formValue),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.errors) {
+              alert("Something went wrong");
+            } else {
+              if (res.status === "success") {
+                window.location.href = res.data.checkout_url;
+              }
+            }
+          })
+      : (toast.success("Successfully got your ticket for the event events!", {
+          position: toast.POSITION.TOP_RIGHT,
+        }),
+        navigate("/home"));
   }
 
   return (
@@ -171,7 +162,7 @@ function Ticket() {
               <Select
                 defaultValue={"Select"}
                 name="ticket"
-                options={ticket_type}
+                options={ticketData.ticket ? ticket_type : free_ticket_type}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(value, action) => {
@@ -184,13 +175,17 @@ function Ticket() {
             </div>
             <div className="flex flex-col gap-3 w-full">
               <label className=" text-base font-semibold text-[#2D2A56]">
-                Price
+                Price In Birr
               </label>
 
               <input
                 type="text"
                 readOnly
-                value={`${ticketData.ticket[ticketData?.selected] || 0} $`}
+                value={
+                  ticketData.ticket
+                    ? `${ticketData?.ticket[ticketData?.selected] || 0} $`
+                    : `0 $`
+                }
                 id="price"
                 className="h-12 px-4 py-4 rounded-[6px] caret-[#EF5DA8] border-[1px] border-mainRed focus:outline-none focus:ring-1 focus:ring-[#EF5DA8] focus:border-mainRed"
               />
