@@ -31,3 +31,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #e07ba2;
 }
+/* .leaflet-container {
+  width: 100%;
+  height: 60vh;
+} */
+.leaflet-container {
+  width: 100%;
+  height: 60vh;
+}
