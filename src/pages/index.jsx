@@ -21,8 +21,6 @@ function index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
     isHost: false,
   });
 
@@ -130,32 +128,6 @@ function index() {
                 <p className="text-red-500 text-sm">{errors.password}</p>
               )}
 
-              {/* <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                }}
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200
-              "
-              />
-              <label htmlFor="email" className="mt-2">
-                Password
-              </label>
-              <input
-                type="password"
-                onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
-                }}
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-              />
-              {loginError ? (
-                <p className="text-red-500 text-sm -mt-6">
-                  {loginError.message}
-                </p>
-              ) : (
-                ""
-              )} */}
               <div className="flex justify-between font-light">
                 <p>
                   <input type="checkbox" className="mr-2 cursor-pointer" />

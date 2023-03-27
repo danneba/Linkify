@@ -13,7 +13,7 @@ import { UilSpinner } from "@iconscout/react-unicons";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import * as ELG from "esri-leaflet-geocoder";
 import { NavLink, Link } from "react-router-dom";
 
@@ -99,6 +99,7 @@ function Detail() {
                   new Date(getSingleEventDone?.items?.created_at),
                   "MMM dd, yyyy"
                 )} */}
+                ger
               </p>
             </div>
             <span>50 people coming</span>
@@ -130,7 +131,15 @@ function Detail() {
               <div>
                 <MapContainer
                   className="map"
-                  center={position}
+                  center={
+                    getSingleEventDone?.items?.latitude
+                      ? [
+                          getSingleEventDone?.items?.latitude,
+                          getSingleEventDone?.items?.longitude,
+                        ]
+                      : position
+                  }
+                  // center={[1.832, 36.4075]}
                   zoom={6}
                   style={{ height: 500, width: "100%" }}
                 >
@@ -138,7 +147,10 @@ function Detail() {
                     attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
-                  <Geocoder address="New York" />
+                  <Geocoder address={getSingleEventDone?.items?.location} />
+                  <Marker position={position}>
+                    <Popup></Popup>
+                  </Marker>
                 </MapContainer>
               </div>
             </div>

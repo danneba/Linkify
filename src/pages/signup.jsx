@@ -14,35 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { signupSchema } from "../validation";
 import { set, unset } from "../store/features/user/userSlice";
+import { userSignup } from "../queries/signup";
 
-const ADD_USER = gql`
-  mutation (
-    $email: String!
-    $first_name: String!
-    $last_name: String!
-    $password: String!
-  ) {
-    sign_up(
-      email: $email
-      first_name: $first_name
-      last_name: $last_name
-      password: $password
-    ) {
-      id
-      token
-    }
-  }
-`;
 function signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  });
   const onSubmit = (values, actions) => {
     console.log("Submitted ==> ", values, actions);
     const { email, first_name, last_name, password } = values;
@@ -63,7 +40,7 @@ function signup() {
       onSubmit,
     });
 
-  const [addUser, { data, loading, error }] = useMutation(ADD_USER);
+  const [addUser, { data, loading, error }] = useMutation(userSignup);
 
   if (data) {
     console.log("The dispatcher is ", dispatch);
@@ -73,10 +50,6 @@ function signup() {
     toast.success("Successfully registered !", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    formData.first_name = "";
-    formData.last_name = "";
-    formData.email = "";
-    formData.password = "";
   }
 
   useEffect(() => {
@@ -90,12 +63,6 @@ function signup() {
       position: toast.POSITION.TOP_RIGHT,
     });
     return;
-  }
-
-  function handleSubmite(e) {
-    e.preventDefault();
-    const { email, first_name, last_name, password } = formData;
-    addUser({ variables: { email, first_name, last_name, password } });
   }
 
   return (
@@ -204,66 +171,6 @@ function signup() {
                 <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
               )}
 
-              {/* <label htmlFor="first_name">First Name</label>
-              <input
-                type="text"
-                id="first_name"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    first_name: e.target.value,
-                  })
-                }
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
-              />
-              <label htmlFor="last_name" className="mt-2">
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="last_name"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    last_name: e.target.value,
-                  })
-                }
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-              />
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    email: e.target.value,
-                  })
-                }
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
-              />
-              <label htmlFor="password" className="mt-2">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    password: e.target.value,
-                  })
-                }
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-              />
-              <label htmlFor="email" className="mt-2">
-                Confirm Password
-              </label> */}
-              {/* <input
-                type="password"
-                id="confirm_password"
-                className="rounded py-4 px-5 outline-none -mt-2 bg-gray-200 mb-5"
-              /> */}
               {loading ? (
                 <button
                   disabled

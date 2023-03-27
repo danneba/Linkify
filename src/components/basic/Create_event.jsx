@@ -14,12 +14,18 @@ import { useNavigate } from "react-router-dom";
 const Stepper = () => {
   const navigate = useNavigate();
   const [event_id, setEventId] = useState("");
+  const [location, setLocation] = useState({
+    longitude: "",
+    latitude: "",
+  });
 
   const [formData, setFormData] = useState({
     name: "",
     image: "",
     category: "",
     thumbnail: "",
+    latitude: "",
+    longitude: "",
     location: "",
     start_date: "",
     end_date: "",
@@ -97,11 +103,14 @@ const Stepper = () => {
       image,
       category,
       thumbnail,
+      latitude,
+      longitude,
       location,
       start_date,
       end_date,
       description,
     } = formData;
+    console.log("THe form sdar first ", formData, toString(location.latitude));
     if (currentStep == 1) {
       addUsers({
         variables: {
@@ -110,6 +119,8 @@ const Stepper = () => {
             image: image,
             category: category,
             thumbnail: thumbnail,
+            latitude: latitude ? latitude : toString(location.latitude),
+            longitude: longitude ? longitude : toString(location.longitude),
             location: location,
             start_date: start_date,
             end_date: end_date,
@@ -143,7 +154,8 @@ const Stepper = () => {
     formData.image = "";
     formData.category = "";
     formData.thumbnail = "";
-    formData.location = "";
+    formData.latitude = "";
+    formData.longitude = "";
     formData.start_date = "";
     formData.end_date = "";
     formData.description = "";
@@ -172,6 +184,21 @@ const Stepper = () => {
 
   useEffect(() => {
     setCurrentStep(1);
+  }, []);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      console.log("Got the location ");
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLocation({
+          ...location,
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        });
+      });
+
+      console.log("The loc ", location);
+    }
   }, []);
   return (
     <>
@@ -344,6 +371,7 @@ const Stepper = () => {
                   </label>
                   <input
                     id="full_name"
+                    required
                     type="text"
                     className="py-2 w-96 px-4 border-[1px] border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     onChange={(e) => {
@@ -357,6 +385,7 @@ const Stepper = () => {
                   </label>
                   <input
                     id="image"
+                    required
                     type="text"
                     className="py-2 w-96 px-4 border-[1px] border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     onChange={(e) => {
@@ -406,11 +435,40 @@ const Stepper = () => {
                       setFormData({ ...formData, location: e.target.value });
                     }}
                   />
+
+                  <label className="text-base font-semibold text-[#2D2A56]">
+                    Latitude
+                  </label>
+                  <input
+                    id="lat"
+                    type="number"
+                    defaultValue={location.latitude}
+                    className="py-2 w-96 px-4 border-[1px] border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    onChange={(e) => {
+                      setFormData({ ...formData, latitude: e.target.value });
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <label className="text-base font-semibold text-[#2D2A56]">
+                    Longitude
+                  </label>
+
+                  <input
+                    id="lng"
+                    type="number"
+                    defaultValue={location.longitude}
+                    className="py-2 w-96 px-4 border-[1px] border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    onChange={(e) => {
+                      setFormData({ ...formData, longitude: e.target.value });
+                    }}
+                  />
                 </div>
                 <div className="flex flex-col gap-y-2 mt-2 ">
                   <label className="font-semibold">Start Date</label>
                   <input
                     type="date"
+                    required
                     className="border border-gray-200 px-4 rounded py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     id="start_date"
                     onChange={(e) => {
@@ -422,6 +480,7 @@ const Stepper = () => {
                   <label className="font-semibold">End Date</label>
                   <input
                     type="date"
+                    required
                     className="border border-gray-200 px-4 rounded py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     id="end_date"
                     onChange={(e) => {

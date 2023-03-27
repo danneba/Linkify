@@ -12,44 +12,53 @@ import { UilSpinner, UilAngleRightB } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { set, unset } from "../store/features/user/userSlice";
+import { hostSignup } from "../queries/signup";
+import { useFormik } from "formik";
+import { hostSignupSchema } from "../validation";
 
-const ADD_USER = gql`
-  mutation (
-    $address: String
-    $email: String!
-    $host_name: String!
-    $image: String
-    $password: String!
-    $phone: String
-    $thumbnail: String
-    $website: String
-  ) {
-    hostSignup(
-      address: $address
-      email: $email
-      host_name: $host_name
-      image: $image
-      password: $password
-      phone: $phone
-      thumbnail: $thumbnail
-      website: $website
-    ) {
-      id
-      token
-    }
-  }
-`;
 function HostSignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  });
-  const [addUser, { data, loading, error }] = useMutation(ADD_USER);
+  const onSubmit = (values, actions) => {
+    console.log("Submit");
+    const { name, email, password, address, website, thumbnail, image, phone } =
+      values;
+    addUser({
+      variables: {
+        host_name: name,
+        email,
+        password,
+        address,
+        website,
+        thumbnail,
+        image,
+        phone,
+      },
+    });
+
+    actions.resetForm();
+  };
+
+  const { values, errors, handleBlur, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        website: "",
+        thumbnail: "",
+        image: "",
+        phone: "",
+        address: "",
+      },
+      validationSchema: hostSignupSchema,
+      onSubmit,
+    });
+  console.log("The error is ", errors);
+
+  const [addUser, { data, loading, error }] = useMutation(hostSignup);
 
   if (loading) {
     toast.warning("WAITING FOR THE  registered !", {
@@ -63,14 +72,6 @@ function HostSignUp() {
     toast.success("Successfully registered !", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    formData.host_name = "";
-    formData.address = "";
-    formData.email = "";
-    formData.password = "";
-    formData.website = "";
-    formData.address = "";
-    formData.thumbnail = "";
-    formData.image = "";
   }
 
   useEffect(() => {
@@ -86,31 +87,31 @@ function HostSignUp() {
     return;
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const {
-      host_name,
-      email,
-      password,
-      address,
-      website,
-      thumbnail,
-      image,
-      phone,
-    } = formData;
-    addUser({
-      variables: {
-        host_name,
-        email,
-        password,
-        address,
-        website,
-        thumbnail,
-        image,
-        phone,
-      },
-    });
-  }
+  // function handleSubmite(e) {
+  //   e.preventDefault();
+  //   const {
+  //     host_name,
+  //     email,
+  //     password,
+  //     address,
+  //     website,
+  //     thumbnail,
+  //     image,
+  //     phone,
+  //   } = formData;
+  //   addUser({
+  //     variables: {
+  //       host_name,
+  //       email,
+  //       password,
+  //       address,
+  //       website,
+  //       thumbnail,
+  //       image,
+  //       phone,
+  //     },
+  //   });
+  // }
 
   return (
     <div className=" h-full flex flex-col xl:flex-row justify-center w-full overflow-y-scroll">
@@ -133,125 +134,153 @@ function HostSignUp() {
               onSubmit={handleSubmit}
               className="flex flex-col gap-y-2 w-[500px]"
             >
-              <label htmlFor="host_name" className="mb-2">
+              <label htmlFor="name" className="mb-2">
                 Name
               </label>
               <input
                 type="text"
-                id="host_name"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    host_name: e.target.value,
-                  })
+                id="name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.name && touched.name
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
-              <label htmlFor="email" className="mt-2">
-                Email
-              </label>
+              {errors.name && touched.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
+              <label htmlFor="email">Email</label>
               <input
-                type="text"
+                type="email"
                 id="email"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    email: e.target.value,
-                  })
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.email && touched.email
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
+              {errors.email && touched.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
               <label htmlFor="password" className="mt-2">
                 Password
               </label>
               <input
                 type="password"
                 id="password"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    password: e.target.value,
-                  })
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.password && touched.password
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
-              <label htmlFor="email" className="mt-2">
+              {errors.password && touched.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
+              <label htmlFor="confirmPassword" className="mt-2">
                 Confirm Password
               </label>
               <input
                 type="password"
-                id="confirm_password"
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
+                id="confirmPassword"
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
+                }
               />
-              <label htmlFor="website" className="mt-2">
+              {errors.confirmPassword && touched.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
+              <label htmlFor="website" className="mb-2">
                 Website
               </label>
               <input
                 type="text"
                 id="website"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    website: e.target.value,
-                  })
+                value={values.website}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.website && touched.website
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
-              <label htmlFor="thumbnail" className="mt-2">
+              <label htmlFor="thumbnail" className="mb-2">
                 Thumbnail
               </label>
               <input
                 type="text"
                 id="thumbnail"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    thumbnail: e.target.value,
-                  })
+                value={values.thumbnail}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.thumbnail && touched.thumbnail
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
-              <label htmlFor="image" className="mt-2">
+              <label htmlFor="image" className="mb-2">
                 Image
               </label>
               <input
                 type="text"
                 id="image"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    image: e.target.value,
-                  })
+                value={values.image}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.image && touched.image
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
-              />{" "}
-              <label htmlFor="phone" className="mt-2">
+              />
+              <label htmlFor="phone" className="mb-2">
                 Phone
               </label>
               <input
                 type="text"
                 id="phone"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    phone: e.target.value,
-                  })
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.phone && touched.phone
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
-              <label htmlFor="address" className="mt-2">
+              {errors.phone && touched.phone && (
+                <p className="text-red-500 text-sm">{errors.phone}</p>
+              )}{" "}
+              <label htmlFor="address" className="mb-2">
                 Address
               </label>
               <input
                 type="text"
                 id="address"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    address: e.target.value,
-                  })
+                value={values.address}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.address && touched.address
+                    ? "rounded py-4 px-5 outline-none -mt-2 bg-gray-200 border-2 border-red-500"
+                    : "rounded py-4 px-5 outline-none -mt-2 bg-gray-200"
                 }
-                className="rounded py-4 px-5 outline-none  bg-gray-200 mb-5"
               />
               {loading ? (
                 <button

@@ -88,6 +88,8 @@ const getOneEvent = gql`
       thumbnail
       updated_at
       view
+      latitude
+      longitude
       host_id
       end_date
       description
