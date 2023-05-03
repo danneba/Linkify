@@ -66,18 +66,27 @@ function Nav({ theme }) {
                         Hi
                         <span className=" text-mainRed pr-2"> {Name}</span>
                       </div>
-                      <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
+                      <Link
+                        to={"/UnderConstruction"}
+                        className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2"
+                      >
                         <UilUser className="h-5 text-mainRed" />
                         Profile
-                      </button>
-                      <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
+                      </Link>
+                      <Link
+                        to={"/UnderConstruction"}
+                        className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2"
+                      >
                         <UilBookmark className="h-5 text-mainRed" />
                         Wish List
-                      </button>
-                      <button className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2">
+                      </Link>
+                      <Link
+                        to={"/UnderConstruction"}
+                        className="font-semibold p-3 flex gap-x-3  text-left hover:bg-gray-200 hover:shadow-lg w-full px-2"
+                      >
                         <UilArrowGrowth className="h-5 text-mainRed" />
                         Stat
-                      </button>
+                      </Link>
                       <button
                         onClick={() => {
                           dispatch(unset());

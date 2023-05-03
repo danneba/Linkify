@@ -164,10 +164,13 @@ function index() {
                 <p>or</p>
                 <p className="w-32 h-[1px] bg-gray-300"></p>
               </div>
-              <button className="text-center rounded border-[1px] border-gray-500  hover:bg-opacity-90 py-3 flex justify-center items-center gap-x-3 text-sm">
+              <Link
+                to={"/underConstruction"}
+                className="text-center rounded border-[1px] border-gray-500  hover:bg-opacity-90 py-3 flex justify-center items-center gap-x-3 text-sm"
+              >
                 <img src={google} alt="" />
                 Sign in with Google
-              </button>
+              </Link>
             </form>
           </div>
         </div>

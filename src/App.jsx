@@ -1,4 +1,6 @@
 import Login from "./pages/index";
+import UnderConstruction from "./pages/UnderConstruction";
+
 import Signup from "./pages/signup";
 import HostSignUp from "./pages/HostSignUp";
 import AddEvent from "./pages/home/AddEvent";
@@ -30,6 +32,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/UnderConstruction" element={<UnderConstruction />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/hostSignUp" element={<HostSignUp />} />
           {/* <Route path="home" element={<MainLayout theme="dark" />}> */}
