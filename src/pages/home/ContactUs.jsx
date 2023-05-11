@@ -18,6 +18,7 @@ import phone from "../../assets/phone.avif";
 import message from "../../assets/message.jpg";
 import habesha from "../../assets/habesha.jpg";
 import two from "../../assets/two.jpg";
+import { Icon } from "leaflet";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -40,21 +41,25 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 function Contact() {
   const position = [8.980603, 38.757759];
+  const customIcon = new Icon({
+    iconUrl: "	https://cdn-icons-png.flaticon.com/512/2661/2661432.png",
+    iconSize: [38, 38],
+  });
   return (
     <div className="flex flex-col">
-      <div className="flex relative h-[500px]">
+      <div className="flex relative h-[400px]">
         <img
           src={footerBG}
-          className="h-[500px] absolute w-full top-0 rotate-180"
+          className="h-[400px] absolute w-full top-0 rotate-180"
           alt=""
         />
         {/* <img src={curves} className="w-full h-96 "/> */}
-        <div className="flex absolute w-20 h-20 -bottom-3 rounded-full left-56">
+        {/* <div className="flex absolute w-20 h-20 -bottom-3 rounded-full left-56">
           <img
             src={habesha}
             className="flex rounded-full shadow-sm border-2 bg-no-repeat bg-cover "
           />
-        </div>
+        </div> */}
         <div className="flex absolute w-10 h-10 rounded-full top-28 left-32">
           <img
             src={message}
@@ -67,23 +72,21 @@ function Contact() {
             let's start something great together. Get in touch with one of the
             team today
           </p>
-          <UilAngleDoubleDown className=" text-white" width="52" size="140" />
+          <UilAngleDoubleDown className=" text-mainRed" width="52" size="140" />
         </div>
-        <div className="flex absolute w-14 h-14 top-20 rounded-full right-96">
-          <img src={heart} className="flex w-20" />
-        </div>
+
         <div className="flex absolute w-20 h-20 -bottom-10 rounded-full right-64 ">
           <img
             src={phone}
             className="flex rounded-full shadow-sm border-2 w-20"
           />
         </div>
-        <div className="flex absolute w-20 h-20 top-60 rounded-full right-[600px]">
+        {/* <div className="flex absolute w-20 h-20 top-60 rounded-full right-[600px]">
           <img
             src={two}
-            className="flex rounded-full shadow-sm border-2 border-[#ffafcc] bg-cover w-24"
+            className="flex rounded-full shadow-sm border-2 border-[#ffafcc] bg-cover w-20 "
           />
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-center items-start">
         <div className="w-full flex flex-col mt-24 gap-8  justify-center items-end   ">
@@ -123,7 +126,7 @@ function Contact() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker position={position}>
+              <Marker position={position} icon={customIcon}>
                 <Popup>
                   {/* A pretty CSS3 popup. <br /> Easily customizable. */}
                 </Popup>
