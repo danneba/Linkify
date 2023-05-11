@@ -25,7 +25,7 @@ const userSlice = createSlice({
       state.userName = val.name;
       state.isHost = payload.isHost;
     },
-    unset: (state, action) => {
+    unset: (state) => {
       localStorage.removeItem("token");
       return { isLoggedIn: false };
     },

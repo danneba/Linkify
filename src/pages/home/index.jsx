@@ -55,7 +55,11 @@ function home() {
       setCheck("default");
     }
   }, [searchvalue]);
-
+  useEffect(() => {
+    return () => {
+      localStorage.clear();
+    };
+  });
   const {
     loading: getPopularEventLoading,
     error: getPopularEventError,

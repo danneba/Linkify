@@ -39,6 +39,7 @@ const default_auth_link = new ApolloLink((operation, forward) => {
   };
 
   const token = localStorage.getItem("token");
+  console.log("THe Log is CALLED!!");
 
   if (token) {
     h.authorization = `Bearer ${token}`;
