@@ -17,8 +17,13 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 
 import * as ELG from "esri-leaflet-geocoder";
 import { NavLink, Link } from "react-router-dom";
+import { Icon } from "leaflet";
 
 function Detail() {
+  const customIcon = new Icon({
+    iconUrl: "	https://cdn-icons-png.flaticon.com/512/2661/2661432.png",
+    iconSize: [38, 38],
+  });
   const isHost = useSelector((store) => store.user.isHost);
   const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
 
@@ -149,7 +154,7 @@ function Detail() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
                   <Geocoder address={getSingleEventDone?.items?.location} />
-                  <Marker position={position}>
+                  <Marker position={position} icon={customIcon}>
                     <Popup></Popup>
                   </Marker>
                 </MapContainer>
