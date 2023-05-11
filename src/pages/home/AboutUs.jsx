@@ -31,7 +31,10 @@ function About() {
           </div> */}
         </div>
       </div>
-      <div className="flex flex-col pt-44 gap-8 justify-center items-center bg-white">
+      <div
+        className="flex flex-col pt-44 gap-8 justify-center items-center bg-white"
+        id="mission"
+      >
         <p className="flex text-pretify font-semibold text-7xl ">Our Mission</p>
         <p className="flex text-pretify font-semibold text-4xl w-[60%] text-center">
           Our mission is to provide a seamless and convenient ticketing
@@ -132,12 +135,12 @@ function About() {
         <div className="flex mt-12  ml-16">
           <Link
             to="/login"
-            className="flex py-4 px-8 bg-about text-white text-lg font-semibold justify-center items-center"
+            className="flex py-4 px-8 bg-primary rounded text-white text-lg font-semibold justify-center items-center"
           >
             Create Event
           </Link>
         </div>
-        <div className="flex justify-center items-center mt-16">
+        <div className="flex justify-center items-center mt-16" id="team">
           <p className="flex text-Primary font-Lobster font-semibold text-4xl w-[60%] text-center whitespace-nowrap">
             The Team
           </p>

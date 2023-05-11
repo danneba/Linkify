@@ -9,6 +9,7 @@ import Tiktok from "../assets/social/Tiktok.svg";
 import Twitter from "../assets/social/Twitter.svg";
 import Youtube from "../assets/social/Youtube.svg";
 import { NavLink, Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 function Footer() {
   return (
@@ -23,14 +24,50 @@ function Footer() {
           <div className="bg-red-10 h-full w-full flex justify-between items-start px-60">
             <div className="flex flex-col justify-center">
               <img src={whiteIcon} alt="" className=" h-20 w-min" />
-              <p className="w-72">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              <p className="w-96 my-2 text-gray-500">
+                Events unleashed. Your gateway to unforgettable experiences.
+                Explore. Discover. Connect.
               </p>
             </div>
-            <div className="mr-32 place-self-center flex justify-center gap-x-20">
-              <NavLink to={"/home"}>Home</NavLink>
-              <NavLink to={"/venues"}>Venues</NavLink>
-              <NavLink to={"/venues/:venueId"}>About us</NavLink>
+            <div className="mr-32 place-self-center flex  justify-center gap-x-20">
+              <div className="flex gap-5">
+                <NavLink
+                  to={"/home"}
+                  className="font-semibold text-lg text-mainRed"
+                >
+                  Home
+                </NavLink>
+                <div className="flex flex-col gap-3 font-normal text-base">
+                  <NavLink to={"/home"}>Home</NavLink>
+                  <HashLink to={"/home#trending"}>Trending</HashLink>
+                  <HashLink to={"/home#discover"}>Discover</HashLink>
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <NavLink
+                  to={"/about"}
+                  className="font-semibold text-lg text-mainRed"
+                >
+                  About us
+                </NavLink>
+                <div className="flex flex-col gap-3 font-normal text-base">
+                  <NavLink to={"/about"}>About us</NavLink>
+                  <HashLink to={"/about#team"}>The Team</HashLink>
+                  <HashLink to={"/about#mission"}>Missions</HashLink>
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <NavLink
+                  to={"/contact"}
+                  className="font-semibold text-lg text-mainRed"
+                >
+                  Contact Us
+                </NavLink>
+                <div className="flex flex-col gap-3 font-normal text-base">
+                  <NavLink to={"/contact"}>Contact Us</NavLink>
+                  <Link to={"/about#team"}>asdasd</Link>
+                </div>
+              </div>
             </div>
           </div>
           <div className="bg-red-30 h-[30%] border-t-[1px] border-gray-500 w-full flex justify-between items-center px-96 py-10">

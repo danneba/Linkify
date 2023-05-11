@@ -98,7 +98,10 @@ function home() {
                   className="absolute right-6 "
                 />
               </div>
-              <p className="text-base w-[40%] text-white font-medium">
+              <p
+                className="text-base w-[40%] text-white font-medium"
+                id="trending"
+              >
                 <span className=" text-gray-300">Trending:</span> Concerts,
               </p>
             </div>
@@ -244,7 +247,7 @@ function home() {
       ) : (
         <div></div>
       )}
-      <div className="flex flex-col px-5 w-[75%] mt-10">
+      <div className="flex flex-col px-5 w-[75%] mt-10 " id="discover">
         <div className="text-left mb-5">
           <p className=" text-2xl font-bold font-Lobster text-mainRed">
             Discover
